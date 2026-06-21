@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheFinnery — Product Image Preview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #FAFCFC; font-family: 'Outfit', system-ui, sans-serif; color: #1E2B2E; }
+  header { background: #0B2D36; padding: 24px 40px; border-bottom: 1px solid #1E4A58; position: sticky; top: 0; z-index: 50; }
+  header h1 { color: white; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  header p { color: rgba(255,255,255,0.4); font-size: 13px; margin-top: 4px; }
+  .stats { background: #134859; padding: 16px 40px; display: flex; gap: 32px; border-bottom: 1px solid #1E4A58; }
+  .stat { color: #29A8C4; font-size: 13px; font-weight: 600; }
+  .stat span { color: white; font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; display: block; margin-top: 2px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; padding: 32px 40px; max-width: 1440px; margin: 0 auto; }
+  .card { background: #EFF6F8; border: 1px solid #DFF0F3; border-radius: 12px; overflow: hidden; transition: all 250ms ease; box-shadow: 0 2px 6px rgba(11,45,54,0.08); }
+  .card:hover { box-shadow: 0 8px 32px rgba(11,45,54,0.12); transform: translateY(-3px); }
+  .card .img-wrap { aspect-ratio: 4/5; background: #0B2D36; overflow: hidden; border-radius: 12px 12px 0 0; }
+  .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms ease; }
+  .card:hover img { transform: scale(1.04); }
+  .card .body { padding: 12px 16px 16px; }
+  .card .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #29A8C4; margin-bottom: 3px; }
+  .card .name { font-size: 17px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: #1E2B2E; margin-bottom: 2px; }
+  .card .sci { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 13px; color: #7A9AA2; }
+  .card .file { font-family: 'DM Mono', monospace; font-size: 11px; color: #5A7A82; margin-top: 8px; padding-top: 8px; border-top: 1px solid #DFF0F3; }
+  .card .size { font-family: 'DM Mono', monospace; font-size: 11px; color: #7A9AA2; float: right; }
+  .missing { background: #1E2B2E; }
+  .missing .img-wrap { display: flex; align-items: center; justify-content: center; }
+  .missing .img-wrap span { color: #5A7A82; font-size: 14px; font-weight: 600; }
+  .missing .body { background: #134859; }
+  .missing .name { color: #C8DFE4; }
+  .missing .sci { color: #5A7A82; }
+  .missing .file { border-color: #1E4A58; color: #5A7A82; }
+  .missing .eyebrow { color: #E8622A; }
+</style>
+</head>
+<body>
+<header>
+  <h1>TheFinnery</h1>
+  <p>Product Image Preview — Pro Gemini Prompts</p>
+</header>
+<div class="stats" id="stats"></div>
+<div class="grid" id="grid"></div>
+<script>
+const products = [{"name":"Platinum Arowana","sci":"Scleropages formosus","slug":"platinum-arowana","category":"arowana","url":"/images/products/platinum-arowana-hero.jpg"},{"name":"Gem Tang","sci":"Zebrasoma gemmatum","slug":"gem-tang","category":"tang","url":"/images/products/gem-tang-hero.jpg"},{"name":"Peppermint Angelfish","sci":"Centropyge boylei","slug":"peppermint-angelfish","category":"angelfish","url":"/images/products/peppermint-angelfish-hero.jpg"},{"name":"Albino Alligator Gar","sci":"Atractosteus spatula","slug":"albino-alligator-gar","category":"gar","url":"/images/products/albino-alligator-gar-hero.jpg"},{"name":"Dragon Goby","sci":"Gobioides broussonnetii","slug":"dragon-goby","category":"goby","url":"/images/products/dragon-goby-hero.jpg"},{"name":"Fahaka Pufferfish","sci":"Tetraodon lineatus","slug":"fahaka-pufferfish","category":"pufferfish","url":"/images/products/fahaka-pufferfish-hero.jpg"},{"name":"Flowerhorn Cichlid","sci":"Hybrid (Amphilophus spp.)","slug":"flowerhorn-cichlid","category":"cichlid","url":"/images/products/flowerhorn-cichlid-hero.jpg"},{"name":"Wolf Fish","sci":"Hoplias malabaricus","slug":"wolf-fish","category":"cichlid","url":"/images/products/wolf-fish-hero.jpg"},{"name":"Red Tail Catfish","sci":"Phractocephalus hemioliopterus","slug":"red-tail-catfish","category":"catfish","url":"/images/products/red-tail-catfish-hero.jpg"},{"name":"Red-Bellied Piranha","sci":"Pygocentrus nattereri","slug":"piranha","category":"piranha","url":"/images/products/piranha-hero.jpg"},{"name":"Clarion Angelfish","sci":"Holacanthus clarionensis","slug":"clarion-angelfish","category":"angelfish","url":"/images/products/clarion-angelfish-hero.jpg"},{"name":"Mbu Pufferfish","sci":"Tetraodon mbu","slug":"mbu-pufferfish","category":"pufferfish","url":"/images/products/mbu-pufferfish-hero.jpg"},{"name":"Black Diamond Stingray","sci":"Potamotrygon leopoldi","slug":"black-diamond-stingray","category":"stingray","url":"/images/products/black-diamond-stingray-hero.jpg"},{"name":"Motoro Stingray","sci":"Potamotrygon motoro","slug":"motoro-stingray","category":"stingray","url":"/images/products/motoro-stingray-hero.jpg"},{"name":"Black Ghost Knife Fish","sci":"Apteronotus albifrons","slug":"black-ghost-knife-fish","category":"knife-fish","url":"/images/products/black-ghost-knife-fish-hero.jpg"},{"name":"Clown Knife Fish","sci":"Chitala ornata","slug":"clown-knife-fish","category":"knife-fish","url":"/images/products/clown-knife-fish-hero.jpg"},{"name":"Clown Loach","sci":"Chromobotia macracanthus","slug":"clown-loach","category":"loach","url":"/images/products/clown-loach-hero.jpg"},{"name":"Zebra Loach","sci":"Botia striata","slug":"zebra-loach","category":"loach","url":"/images/products/zebra-loach-hero.jpg"},{"name":"Zebra Pleco","sci":"Hypancistrus zebra","slug":"zebra-pleco","category":"pleco","url":"/images/products/zebra-pleco-hero.jpg"},{"name":"Royal Pleco","sci":"Panaque nigrolineatus","slug":"royal-pleco","category":"pleco","url":"/images/products/royal-pleco-hero.jpg"},{"name":"Denison Barb","sci":"Sahyadria denisonii","slug":"denison-barb","category":"barb","url":"/images/products/denison-barb-hero.jpg"},{"name":"Tiger Barb","sci":"Puntigrus tetrazona","slug":"tiger-barb","category":"barb","url":"/images/products/tiger-barb-hero.jpg"},{"name":"Tiger Oscar","sci":"Astronotus ocellatus","slug":"tiger-oscar","category":"oscar","url":"/images/products/tiger-oscar-hero.jpg"},{"name":"Albino Oscar","sci":"Astronotus ocellatus","slug":"albino-oscar","category":"oscar","url":"/images/products/albino-oscar-hero.jpg"},{"name":"Platinum White Betta","sci":"Betta splendens","slug":"platinum-white-betta","category":"betta","url":"/images/products/platinum-white-betta-hero.jpg"},{"name":"Galaxy Koi Betta","sci":"Betta splendens","slug":"galaxy-koi-betta","category":"betta","url":"/images/products/galaxy-koi-betta-hero.jpg"},{"name":"Fire Eel","sci":"Mastacembelus erythrotaenia","slug":"fire-eel","category":"eel","url":"/images/products/fire-eel-hero.jpg"},{"name":"Snowflake Moray Eel","sci":"Echidna nebulosa","slug":"snowflake-moray-eel","category":"eel","url":"/images/products/snowflake-moray-eel-hero.jpg"},{"name":"Peacock Bass","sci":"Cichla ocellaris","slug":"peacock-bass","category":"bass","url":"/images/products/peacock-bass-hero.jpg"},{"name":"Australian Bass","sci":"Macquaria novemaculeata","slug":"australian-bass","category":"bass","url":"/images/products/australian-bass-hero.jpg"},{"name":"Panther Grouper","sci":"Cromileptes altivelis","slug":"panther-grouper","category":"grouper","url":"/images/products/panther-grouper-hero.jpg"},{"name":"Miniatus Grouper","sci":"Cephalopholis miniata","slug":"miniatus-grouper","category":"grouper","url":"/images/products/miniatus-grouper-hero.jpg"},{"name":"Blue Diamond Discus","sci":"Symphysodon aequifasciatus","slug":"blue-diamond-discus","category":"discus","url":"/images/products/blue-diamond-discus-hero.jpg"},{"name":"Pigeon Blood Discus","sci":"Symphysodon aequifasciatus","slug":"pigeon-blood-discus","category":"discus","url":"/images/products/pigeon-blood-discus-hero.jpg"},{"name":"Shovelnose Tiger Catfish","sci":"Pseudoplatystoma tigrinum","slug":"shovelnose-tiger-catfish","category":"catfish","url":"/images/products/shovelnose-tiger-catfish-hero.jpg"},{"name":"Irwini Catfish","sci":"Paulicea lutkeni","slug":"irwini-catfish","category":"catfish","url":"/images/products/irwini-catfish-hero.jpg"},{"name":"Marble Achara Catfish","sci":"Leiarius marmoratus","slug":"marble-achara-catfish","category":"catfish","url":"/images/products/marble-achara-catfish-hero.jpg"},{"name":"Bumblebee Catfish","sci":"Pseudopimelodus bufonius","slug":"bumblebee-catfish","category":"catfish","url":"/images/products/bumblebee-catfish-hero.jpg"},{"name":"Black Lancer Catfish","sci":"Bagrichthys macracanthus","slug":"black-lancer-catfish","category":"catfish","url":"/images/products/black-lancer-catfish-hero.jpg"},{"name":"Grass Cutter Catfish","sci":"Prochilodus lineatus","slug":"grass-cutter-catfish","category":"catfish","url":"/images/products/grass-cutter-catfish-hero.jpg"},{"name":"Starry Night Cichlid","sci":"Paratilapia polleni","slug":"starry-night-cichlid","category":"cichlid","url":"/images/products/starry-night-cichlid-hero.jpg"},{"name":"Dovii Cichlid","sci":"Parachromis dovii","slug":"dovii-cichlid","category":"cichlid","url":"/images/products/dovii-cichlid-hero.jpg"},{"name":"Blue Zaire Frontosa","sci":"Cyphotilapia frontosa","slug":"blue-zaire-frontosa","category":"cichlid","url":"/images/products/blue-zaire-frontosa-hero.jpg"},{"name":"Macaw Cichlid","sci":"Crenicichla sp. (Peru)","slug":"macaw-cichlid","category":"cichlid","url":"/images/products/macaw-cichlid-hero.jpg"},{"name":"Turquoise Severum Cichlid","sci":"Heros efasciatus","slug":"turquoise-severum-cichlid","category":"cichlid","url":"/images/products/turquoise-severum-cichlid-hero.jpg"},{"name":"Gold Severum Cichlid","sci":"Heros efasciatus","slug":"gold-severum-cichlid","category":"cichlid","url":"/images/products/gold-severum-cichlid-hero.jpg"},{"name":"Elephantnose Fish","sci":"Gnathonemus petersii","slug":"elephantnose-fish","category":"goby","url":"/images/products/elephantnose-fish-hero.jpg"},{"name":"Electric Eel","sci":"Electrophorus electricus","slug":"electric-eel","category":"eel","url":"/images/products/electric-eel-hero.jpg"},{"name":"Vampire Fish (Payara)","sci":"Hydrolycus scomberoides","slug":"vampire-fish-payara","category":"piranha","url":"/images/products/vampire-fish-payara-hero.jpg"},{"name":"Freshwater Stingray (Motoro)","sci":"Potamotrygon motoro","slug":"freshwater-stingray","category":"stingray","url":"/images/products/freshwater-stingray-hero.jpg"},{"name":"Tiger Loach","sci":"Syncrossus hymenophysa","slug":"tiger-loach","category":"loach","url":"/images/products/tiger-loach-hero.jpg"},{"name":"Lungfish","sci":"Protopterus annectens","slug":"lungfish","category":"eel","url":"/images/products/lungfish-hero.jpg"},{"name":"Red-Bellied Piranha","sci":"Pygocentrus nattereri","slug":"red-bellied-piranha","category":"piranha","url":"/images/products/red-bellied-piranha-hero.jpg"},{"name":"Golden Basslet","sci":"Liopropoma aureum","slug":"golden-basslet","category":"bass","url":"/images/products/golden-basslet-hero.jpg"},{"name":"Roseline Barb","sci":"Sahyadria denisonii","slug":"roseline-barb","category":"barb","url":"/images/products/roseline-barb-hero.jpg"},{"name":"Albino Shark","sci":"Epalzeorhynchos munense","slug":"albino-shark","category":"barb","url":"/images/products/albino-shark-hero.jpg"},{"name":"Ornate Bichir","sci":"Polypterus ornatipinnis","slug":"bichir","category":"eel","url":"/images/products/bichir-hero.jpg"},{"name":"Six-Barred Distichodus","sci":"Distichodus sexfasciatus","slug":"distichodus-sexfasciatus","category":"barb","url":"/images/products/distichodus-sexfasciatus-hero.jpg"},{"name":"Flagtail Prochilodus","sci":"Semaprochilodus taeniurus","slug":"flagtail-prochilodus","category":"barb","url":"/images/products/flagtail-prochilodus-hero.jpg"},{"name":"Cobalt Blue Zebra","sci":"Maylandia callainos","slug":"cobalt-blue-zebra","category":"cichlid","url":"/images/products/cobalt-blue-zebra-hero.jpg"},{"name":"Electric Blue Jack Dempsey","sci":"Rocio octofasciata","slug":"electric-blue-jack-dempsey","category":"cichlid","url":"/images/products/electric-blue-jack-dempsey-hero.jpg"},{"name":"Short-Body Albino Silver Arowana","sci":"Osteoglossum bicirrhosum","slug":"short-body-albino-silver-arowana","category":"arowana","url":"/images/products/short-body-albino-silver-arowana-hero.jpg"},{"name":"Golden Arowana","sci":"Scleropages formosus","slug":"golden-arowana","category":"arowana","url":"/images/products/golden-arowana-hero.jpg"},{"name":"Red Arowana (Blood Red)","sci":"Scleropages formosus","slug":"red-arowana-blood-red","category":"arowana","url":"/images/products/red-arowana-blood-red-hero.jpg"},{"name":"Super Red Arowana","sci":"Scleropages formosus","slug":"super-red-arowana","category":"arowana","url":"/images/products/super-red-arowana-hero.jpg"},{"name":"Cobalt Blue Discus","sci":"Symphysodon aequifasciatus","slug":"cobalt-blue-discus","category":"discus","url":"/images/products/cobalt-blue-discus-hero.jpg"},{"name":"Wild Discus","sci":"Symphysodon haraldi","slug":"wild-discus","category":"discus","url":"/images/products/wild-discus-hero.jpg"},{"name":"Red Turquoise Discus","sci":"Symphysodon aequifasciatus","slug":"red-turquoise-discus","category":"discus","url":"/images/products/red-turquoise-discus-hero.jpg"},{"name":"Golden Discus","sci":"Symphysodon aequifasciatus","slug":"golden-discus","category":"discus","url":"/images/products/golden-discus-hero.jpg"},{"name":"Checkerboard Discus","sci":"Symphysodon aequifasciatus","slug":"checkerboard-discus","category":"discus","url":"/images/products/checkerboard-discus-hero.jpg"},{"name":"Leopard Skin Discus","sci":"Symphysodon aequifasciatus","slug":"leopard-skin-discus","category":"discus","url":"/images/products/leopard-skin-discus-hero.jpg"},{"name":"White Butterfly Discus","sci":"Symphysodon aequifasciatus","slug":"white-butterfly-discus","category":"discus","url":"/images/products/white-butterfly-discus-hero.jpg"},{"name":"Royal Blue Discus","sci":"Symphysodon aequifasciatus","slug":"royal-blue-discus","category":"discus","url":"/images/products/royal-blue-discus-hero.jpg"},{"name":"Figure Eight Puffer Fish","sci":"Tetraodon biocellatus","slug":"figure-eight-puffer-fish","category":"pufferfish","url":"/images/products/figure-eight-puffer-fish-hero.jpg"},{"name":"Cross River Puffer","sci":"Tetraodon pustulatus","slug":"cross-river-puffer","category":"pufferfish","url":"/images/products/cross-river-puffer-hero.jpg"},{"name":"Avocado Puffer","sci":"Auriglobus modestus","slug":"avocado-puffer","category":"pufferfish","url":"/images/products/avocado-puffer-hero.jpg"},{"name":"Aba Aba Knife Fish","sci":"Gymnarchus niloticus","slug":"aba-aba-knife-fish","category":"knife-fish","url":"/images/products/aba-aba-knife-fish-hero.jpg"},{"name":"Brown Knife Fish","sci":"Apteronotus leptorhynchus","slug":"brown-knife-fish","category":"knife-fish","url":"/images/products/brown-knife-fish-hero.jpg"},{"name":"Glass Knifefish","sci":"Eigenmannia virescens","slug":"glass-knifefish","category":"knife-fish","url":"/images/products/glass-knifefish-hero.jpg"},{"name":"Platinum Gar","sci":"Atractosteus sp.","slug":"platinum-gar","category":"gar","url":"/images/products/platinum-gar-hero.jpg"},{"name":"Arapaima","sci":"Arapaima gigas","slug":"arapaima","category":"gar","url":"/images/products/arapaima-hero.jpg"},{"name":"Snowball Pleco","sci":"Hypancistrus inspector","slug":"snowball-pleco","category":"pleco","url":"/images/products/snowball-pleco-hero.jpg"},{"name":"Blue Panaque Pleco","sci":"Panaque cochliodon","slug":"blue-panaque-pleco","category":"pleco","url":"/images/products/blue-panaque-pleco-hero.jpg"},{"name":"Vampire Pleco","sci":"Leporacanthicus galaxias","slug":"vampire-pleco","category":"pleco","url":"/images/products/vampire-pleco-hero.jpg"},{"name":"Three Beacon Pleco","sci":"Leporacanthicus triactis","slug":"three-beacon-pleco","category":"pleco","url":"/images/products/three-beacon-pleco-hero.jpg"},{"name":"Longfin Albino Bristlenose Pleco","sci":"Ancistrus sp.","slug":"longfin-albino-bristlenose-pleco","category":"pleco","url":"/images/products/longfin-albino-bristlenose-pleco-hero.jpg"},{"name":"Altum Angelfish","sci":"Pterophyllum altum","slug":"altum-angelfish","category":"angelfish","url":"/images/products/altum-angelfish-hero.jpg"},{"name":"Starfire Red Angelfish","sci":"Pterophyllum scalare","slug":"starfire-red-angelfish","category":"angelfish","url":"/images/products/starfire-red-angelfish-hero.jpg"},{"name":"Angel Koi Fish","sci":"Pterophyllum scalare","slug":"angel-koi-fish","category":"angelfish","url":"/images/products/angel-koi-fish-hero.jpg"},{"name":"Neptune Grouper","sci":"Cephalopholis igarashiensis","slug":"neptune-grouper","category":"grouper","url":"/images/products/neptune-grouper-hero.jpg"},{"name":"Bladefin Basslet","sci":"Jeboehlkia gladifer","slug":"bladefin-basslet","category":"bass","url":"/images/products/bladefin-basslet-hero.jpg"}];
+
+async function checkImage(url) {
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    if (!res.ok) return { exists: false, size: 0 };
+    const size = parseInt(res.headers.get('content-length') || '0');
+    return { exists: true, size };
+  } catch { return { exists: false, size: 0 }; }
+}
+
+function formatSize(bytes) {
+  if (!bytes) return '—';
+  return (bytes / 1024).toFixed(0) + ' KB';
+}
+
+async function init() {
+  const grid = document.getElementById('grid');
+  const stats = document.getElementById('stats');
+  let success = 0, failed = 0, totalSize = 0;
+
+  for (const p of products) {
+    const imgUrl = p.url;
+    const { exists, size } = await checkImage(imgUrl);
+    if (exists) { success++; totalSize += size; } else { failed++; }
+
+    const card = document.createElement('div');
+    card.className = 'card' + (exists ? '' : ' missing');
+    card.innerHTML = `
+      <div class="img-wrap">
+        ${exists
+          ? `<img src="${imgUrl}" alt="${p.name}" loading="lazy">`
+          : `<span>MISSING</span>`}
+      </div>
+      <div class="body">
+        <div class="eyebrow">${exists ? (p.category || '') : 'FAILED'}</div>
+        <div class="name">${p.name}</div>
+        <div class="sci">${p.sci}</div>
+        <div class="file">${imgUrl.split('/').pop()} <span class="size">${formatSize(size)}</span></div>
+      </div>`;
+    grid.appendChild(card);
+  }
+
+  stats.innerHTML = `
+    <div class="stat">TOTAL<span>${products.length}</span></div>
+    <div class="stat">SUCCESS<span style="color:#1A7A5C">${success}</span></div>
+    <div class="stat">FAILED<span style="color:#E8622A">${failed}</span></div>
+    <div class="stat">TOTAL SIZE<span>${(totalSize / 1024 / 1024).toFixed(1)} MB</span></div>`;
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheFinnery — Topical Authority & Gap Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --abyss: #0B2D36;
+  --deep: #0F3A45;
+  --reef: #163F4B;
+  --lagoon: #29A8C4;
+  --lagoon-dim: #1E7A8F;
+  --ember: #E8622A;
+  --ember-glow: #F2844F;
+  --surface: #FAFCFC;
+  --ink: #1E2B2E;
+  --drift: #7A9BA5;
+  --foam: #E8F0F2;
+  --kelp: #2D8B5E;
+  --kelp-dim: #1F6B45;
+  --coral-pink: #E85D75;
+  --gold: #D4A843;
+  --gold-dim: #B8922F;
+  --violet: #8B6FC0;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'SF Mono', monospace;
+}
+
+body {
+  background: var(--abyss);
+  color: var(--surface);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* === HEADER === */
+.header {
+  padding: 48px 48px 32px;
+  border-bottom: 1px solid rgba(41,168,196,0.15);
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(41,168,196,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.header h1 em { font-style: italic; color: var(--lagoon); }
+.header .subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--drift);
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+.header-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(41,168,196,0.1);
+}
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-card .value {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--surface);
+  letter-spacing: -1px;
+}
+.stat-card .value.accent { color: var(--lagoon); }
+.stat-card .value.ember { color: var(--ember); }
+.stat-card .value.kelp { color: var(--kelp); }
+.stat-card .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--drift);
+  font-weight: 500;
+}
+
+/* === NAV TABS === */
+.nav {
+  display: flex;
+  gap: 0;
+  padding: 0 48px;
+  border-bottom: 1px solid rgba(41,168,196,0.12);
+  background: rgba(11,45,54,0.8);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-tab {
+  padding: 16px 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--drift);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  user-select: none;
+  text-transform: uppercase;
+}
+.nav-tab:hover { color: var(--surface); }
+.nav-tab.active { color: var(--lagoon); border-bottom-color: var(--lagoon); }
+
+/* === SECTION LAYOUT === */
+.section { display: none; padding: 40px 48px 80px; }
+.section.active { display: block; }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.section-desc {
+  color: var(--drift);
+  font-size: 14px;
+  margin-bottom: 32px;
+  max-width: 680px;
+  line-height: 1.7;
+}
+
+/* === GRID CARDS === */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--deep);
+  border: 1px solid rgba(41,168,196,0.1);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.25s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { border-color: rgba(41,168,196,0.3); transform: translateY(-1px); }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.card-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge-critical { background: rgba(232,98,42,0.15); color: var(--ember); }
+.badge-high { background: rgba(212,168,67,0.15); color: var(--gold); }
+.badge-medium { background: rgba(41,168,196,0.15); color: var(--lagoon); }
+.badge-low { background: rgba(122,155,165,0.15); color: var(--drift); }
+.badge-covered { background: rgba(45,139,94,0.15); color: var(--kelp); }
+.badge-new { background: rgba(139,111,192,0.15); color: var(--violet); }
+.badge-hub { background: rgba(232,93,117,0.15); color: var(--coral-pink); }
+
+.card-metrics {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.metric .num {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--surface);
+}
+.metric .lbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--drift);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.card-kws {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.kw-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  background: rgba(41,168,196,0.08);
+  border: 1px solid rgba(41,168,196,0.12);
+  border-radius: 4px;
+  color: var(--drift);
+}
+
+.card-actions {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(41,168,196,0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.action-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+.action-product { background: rgba(232,98,42,0.1); color: var(--ember-glow); }
+.action-species { background: rgba(41,168,196,0.1); color: var(--lagoon); }
+.action-care { background: rgba(45,139,94,0.1); color: var(--kelp); }
+.action-blog { background: rgba(139,111,192,0.1); color: var(--violet); }
+.action-collection { background: rgba(212,168,67,0.1); color: var(--gold); }
+.action-hub { background: rgba(232,93,117,0.1); color: var(--coral-pink); }
+
+/* === INTENT BAR === */
+.intent-bar {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: rgba(122,155,165,0.1);
+}
+.intent-bar .seg { transition: width 0.4s; }
+.seg-info { background: var(--lagoon); }
+.seg-trans { background: var(--ember); }
+.seg-comm { background: var(--gold); }
+.seg-nav { background: var(--violet); }
+.seg-unknown { background: rgba(122,155,165,0.3); }
+
+/* === TABLE === */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table thead th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--drift);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(41,168,196,0.15);
+  position: sticky;
+  top: 52px;
+  background: var(--abyss);
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+.data-table thead th:hover { color: var(--lagoon); }
+.data-table tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(41,168,196,0.06);
+  vertical-align: middle;
+}
+.data-table tbody tr:hover { background: rgba(41,168,196,0.04); }
+.td-cluster { font-weight: 500; color: var(--surface); max-width: 240px; }
+.td-mono { font-family: var(--font-mono); font-size: 12px; font-weight: 500; }
+.td-vol { color: var(--lagoon); }
+.td-kd-low { color: var(--kelp); }
+.td-kd-med { color: var(--gold); }
+.td-kd-high { color: var(--ember); }
+
+/* === CANNIBALIZATION === */
+.cannibal-group {
+  background: var(--deep);
+  border: 1px solid rgba(232,98,42,0.15);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.cannibal-group .group-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+.cannibal-group .group-desc {
+  font-size: 13px;
+  color: var(--drift);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.cannibal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(11,45,54,0.6);
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.cannibal-item .ci-name { font-weight: 500; }
+.cannibal-item .ci-vol { font-family: var(--font-mono); font-size: 12px; color: var(--lagoon); }
+.cannibal-fix {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(45,139,94,0.08);
+  border-left: 3px solid var(--kelp);
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: var(--surface);
+  line-height: 1.6;
+}
+.cannibal-fix strong { color: var(--kelp); font-weight: 600; }
+
+/* === ROADMAP === */
+.roadmap-phase {
+  position: relative;
+  padding-left: 32px;
+  margin-bottom: 40px;
+}
+.roadmap-phase::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 28px;
+  bottom: -40px;
+  width: 2px;
+  background: rgba(41,168,196,0.15);
+}
+.roadmap-phase:last-child::before { display: none; }
+.phase-dot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--lagoon);
+  background: var(--abyss);
+}
+.phase-dot.active { background: var(--lagoon); }
+.phase-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+.phase-subtitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--drift);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.phase-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+}
+.phase-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--deep);
+  border: 1px solid rgba(41,168,196,0.08);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.phase-item .pi-icon {
+  font-size: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.phase-item .pi-text { flex: 1; }
+.phase-item .pi-vol {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--lagoon);
+  white-space: nowrap;
+}
+
+/* === SUMMARY BOXES === */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.summary-box {
+  background: var(--deep);
+  border: 1px solid rgba(41,168,196,0.1);
+  border-radius: 12px;
+  padding: 24px;
+}
+.summary-box h3 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--drift);
+  margin-bottom: 12px;
+}
+.summary-box .big-num {
+  font-family: var(--font-mono);
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* === HUB DIAGRAM === */
+.hub-visual {
+  background: var(--deep);
+  border: 1px solid rgba(41,168,196,0.1);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hub-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(41,168,196,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hub-center {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.hub-center .hub-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--lagoon);
+}
+.hub-center .hub-url {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--drift);
+  margin-top: 4px;
+}
+.hub-spokes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.spoke {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(11,45,54,0.5);
+  border: 1px solid rgba(41,168,196,0.08);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.spoke .spoke-line {
+  width: 20px;
+  height: 2px;
+  background: rgba(41,168,196,0.25);
+  flex-shrink: 0;
+}
+.spoke .spoke-type {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(41,168,196,0.15);
+  background: transparent;
+  color: var(--drift);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.filter-btn:hover { border-color: var(--lagoon); color: var(--surface); }
+.filter-btn.active { background: var(--lagoon); border-color: var(--lagoon); color: var(--abyss); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .header { padding: 24px; }
+  .section { padding: 24px; }
+  .nav { padding: 0 24px; overflow-x: auto; }
+  .card-grid { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .header h1 { font-size: 28px; }
+  .header-stats { flex-wrap: wrap; gap: 16px; }
+}
+
+/* Scroll reveal animation */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card, .cannibal-group, .hub-visual, .roadmap-phase, .phase-item {
+  animation: slideUp 0.4s ease-out both;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Topical Authority <em>Planner</em></h1>
+      <div class="subtitle">THEFINNERY.COM &mdash; GAP ANALYSIS &amp; CONTENT ARCHITECTURE &mdash; 2026-04-04</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-card">
+      <div class="value">1,899</div>
+      <div class="label">Total Keywords</div>
+    </div>
+    <div class="stat-card">
+      <div class="value accent">6.67M</div>
+      <div class="label">Total Search Volume</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">111</div>
+      <div class="label">Keyword Clusters</div>
+    </div>
+    <div class="stat-card">
+      <div class="value kelp">91</div>
+      <div class="label">Products Live</div>
+    </div>
+    <div class="stat-card">
+      <div class="value ember">870</div>
+      <div class="label">Non-Clustered KWs</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">20</div>
+      <div class="label">Categories Live</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-tab active" data-tab="blindspots">Blindspots</div>
+  <div class="nav-tab" data-tab="hubs">Hub Architecture</div>
+  <div class="nav-tab" data-tab="cannibalization">Cannibalization</div>
+  <div class="nav-tab" data-tab="clusters">All Clusters</div>
+  <div class="nav-tab" data-tab="roadmap">Roadmap</div>
+</div>
+
+<!-- ===================== BLINDSPOTS ===================== -->
+<div class="section active" id="blindspots">
+  <h2 class="section-title">Content Blindspots</h2>
+  <p class="section-desc">Categories and topics with massive search demand that TheFinnery has zero or minimal coverage for. These represent the biggest opportunities for topical authority expansion.</p>
+
+  <div class="summary-grid">
+    <div class="summary-box">
+      <h3>Missing Categories</h3>
+      <div class="big-num" style="color:var(--ember)">8</div>
+      <p style="color:var(--drift);font-size:13px;margin-top:4px">New product categories needed</p>
+    </div>
+    <div class="summary-box">
+      <h3>Uncovered Volume</h3>
+      <div class="big-num" style="color:var(--lagoon)">1.2M</div>
+      <p style="color:var(--drift);font-size:13px;margin-top:4px">Monthly searches with no page</p>
+    </div>
+    <div class="summary-box">
+      <h3>Content Pieces Needed</h3>
+      <div class="big-num" style="color:var(--gold)">147</div>
+      <p style="color:var(--drift);font-size:13px;margin-top:4px">New pages to reach authority</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--drift);margin-bottom:16px">New Categories Needed (Not Currently on Site)</h3>
+
+  <div class="card-grid">
+
+    <!-- AXOLOTL -->
+    <div class="card" style="animation-delay:0.05s">
+      <div class="card-header">
+        <div class="card-title">Axolotl</div>
+        <span class="card-badge badge-critical">CRITICAL GAP</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:35%"></div>
+        <div class="seg seg-trans" style="width:40%"></div>
+        <div class="seg seg-comm" style="width:15%"></div>
+        <div class="seg seg-unknown" style="width:10%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">228,900</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">18</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--gold)">48</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Massive demand for axolotls as exotic pets. "Axolotl for sale" alone is 40.5K/mo. TheFinnery has ZERO axolotl content despite being a perfect fit for the luxury aquatic niche.</p>
+      <div class="card-kws">
+        <span class="kw-tag">axolotl pet 60.5K</span>
+        <span class="kw-tag">axolotl for sale 40.5K</span>
+        <span class="kw-tag">axolotl care 6.6K</span>
+        <span class="kw-tag">axolotl life expectancy 8.1K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 4-6 Products</span>
+        <span class="action-tag action-species">+ Species Guide</span>
+        <span class="action-tag action-care">+ 3 Care Guides</span>
+        <span class="action-tag action-blog">+ 2 Blog Posts</span>
+      </div>
+    </div>
+
+    <!-- GOLDFISH (LUXURY) -->
+    <div class="card" style="animation-delay:0.1s">
+      <div class="card-header">
+        <div class="card-title">Luxury Goldfish</div>
+        <span class="card-badge badge-critical">CRITICAL GAP</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:50%"></div>
+        <div class="seg seg-trans" style="width:30%"></div>
+        <div class="seg seg-comm" style="width:15%"></div>
+        <div class="seg seg-unknown" style="width:5%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">158,770</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">16</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--gold)">35</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Premium goldfish varieties (Ranchu, Oranda, Lionhead) are highly collectible. The "goldfish" space is massive and TheFinnery can own the luxury segment with show-quality specimens.</p>
+      <div class="card-kws">
+        <span class="kw-tag">goldfish 40.5K</span>
+        <span class="kw-tag">ranchu goldfish 12.1K</span>
+        <span class="kw-tag">oranda goldfish 8.1K</span>
+        <span class="kw-tag">fancy goldfish 8.1K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 6-8 Products</span>
+        <span class="action-tag action-species">+ 3 Species Guides</span>
+        <span class="action-tag action-care">+ 2 Care Guides</span>
+      </div>
+    </div>
+
+    <!-- KOI -->
+    <div class="card" style="animation-delay:0.15s">
+      <div class="card-header">
+        <div class="card-title">Koi</div>
+        <span class="card-badge badge-critical">CRITICAL GAP</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:55%"></div>
+        <div class="seg seg-trans" style="width:25%"></div>
+        <div class="seg seg-comm" style="width:15%"></div>
+        <div class="seg seg-unknown" style="width:5%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">107,020</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">7</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--gold)">43</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Koi are the quintessential luxury fish. Championship koi sell for millions. Perfect brand alignment with TheFinnery's premium positioning. "Koi fish" variants total 107K+/mo.</p>
+      <div class="card-kws">
+        <span class="kw-tag">koi 40.5K</span>
+        <span class="kw-tag">koi fish 27.1K</span>
+        <span class="kw-tag">koi and ponds 14.8K</span>
+        <span class="kw-tag">koi fish price 4.4K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 8-12 Products</span>
+        <span class="action-tag action-species">+ 4 Species Guides</span>
+        <span class="action-tag action-care">+ 3 Care Guides</span>
+        <span class="action-tag action-blog">+ Koi Price Guide</span>
+      </div>
+    </div>
+
+    <!-- ORNAMENTAL SHRIMP -->
+    <div class="card" style="animation-delay:0.2s">
+      <div class="card-header">
+        <div class="card-title">Ornamental Shrimp</div>
+        <span class="card-badge badge-high">HIGH PRIORITY</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:40%"></div>
+        <div class="seg seg-trans" style="width:35%"></div>
+        <div class="seg seg-comm" style="width:20%"></div>
+        <div class="seg seg-unknown" style="width:5%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">89,500</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">10</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--kelp)">25</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">High-grade Caridina/Neocaridina shrimp (Crystal Red, Blue Bolt, Taiwan Bee) are a booming luxury niche. Mantis shrimp alone is 14.8K/mo. Great cross-sell with existing fish.</p>
+      <div class="card-kws">
+        <span class="kw-tag">ghost shrimp 18.1K</span>
+        <span class="kw-tag">amano shrimp 18.1K</span>
+        <span class="kw-tag">mantis shrimp 14.8K</span>
+        <span class="kw-tag">freshwater shrimp 9.9K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 6-8 Products</span>
+        <span class="action-tag action-species">+ 3 Species Guides</span>
+        <span class="action-tag action-care">+ 2 Care Guides</span>
+      </div>
+    </div>
+
+    <!-- AQUARIUM SHARKS -->
+    <div class="card" style="animation-delay:0.25s">
+      <div class="card-header">
+        <div class="card-title">Aquarium Sharks</div>
+        <span class="card-badge badge-high">HIGH PRIORITY</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:50%"></div>
+        <div class="seg seg-trans" style="width:30%"></div>
+        <div class="seg seg-comm" style="width:10%"></div>
+        <div class="seg seg-unknown" style="width:10%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">101,180</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">17</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--kelp)">28</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Bamboo sharks, epaulette sharks, cat sharks are exotic aquarium showpieces. "Freshwater sharks" (bala, rainbow, iridescent) also huge. Fits luxury monster-fish positioning perfectly.</p>
+      <div class="card-kws">
+        <span class="kw-tag">cat shark 12.1K</span>
+        <span class="kw-tag">rainbow shark 9.9K</span>
+        <span class="kw-tag">bala shark 9.9K</span>
+        <span class="kw-tag">bamboo shark 8.1K</span>
+        <span class="kw-tag">epaulette shark 9.9K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 5-7 Products</span>
+        <span class="action-tag action-species">+ 4 Species Guides</span>
+        <span class="action-tag action-care">+ 2 Care Guides</span>
+      </div>
+    </div>
+
+    <!-- SNAILS -->
+    <div class="card" style="animation-delay:0.3s">
+      <div class="card-header">
+        <div class="card-title">Ornamental Snails</div>
+        <span class="card-badge badge-medium">MEDIUM</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:60%"></div>
+        <div class="seg seg-trans" style="width:25%"></div>
+        <div class="seg seg-comm" style="width:5%"></div>
+        <div class="seg seg-unknown" style="width:10%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">76,000</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">10</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--kelp)">15</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Clean-up crew essentials. Low KD across the board &mdash; easy wins. Nerite, mystery, and assassin snails are high-volume informational queries that drive category awareness.</p>
+      <div class="card-kws">
+        <span class="kw-tag">nerite snails 14.8K</span>
+        <span class="kw-tag">turbo snail 9.9K</span>
+        <span class="kw-tag">mystery snail 9.9K</span>
+        <span class="kw-tag">assassin snail 8.1K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 4-6 Products</span>
+        <span class="action-tag action-species">+ 3 Species Guides</span>
+      </div>
+    </div>
+
+    <!-- SEAHORSE -->
+    <div class="card" style="animation-delay:0.35s">
+      <div class="card-header">
+        <div class="card-title">Seahorses</div>
+        <span class="card-badge badge-high">HIGH PRIORITY</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:45%"></div>
+        <div class="seg seg-trans" style="width:40%"></div>
+        <div class="seg seg-comm" style="width:10%"></div>
+        <div class="seg seg-unknown" style="width:5%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">47,400</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">3</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--gold)">44</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Seahorses are the ultimate exotic aquatic luxury. Captive-bred seahorses command premium prices. Strong transactional intent &mdash; "seahorse" alone is 33.1K/mo with buy intent.</p>
+      <div class="card-kws">
+        <span class="kw-tag">sea horse 33.1K</span>
+        <span class="kw-tag">seahorses 9.9K</span>
+        <span class="kw-tag">seahorse animal 4.4K</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 3-5 Products</span>
+        <span class="action-tag action-species">+ 2 Species Guides</span>
+        <span class="action-tag action-care">+ Seahorse Care Guide</span>
+      </div>
+    </div>
+
+    <!-- JELLYFISH -->
+    <div class="card" style="animation-delay:0.4s">
+      <div class="card-header">
+        <div class="card-title">Jellyfish</div>
+        <span class="card-badge badge-high">HIGH PRIORITY</span>
+      </div>
+      <div class="intent-bar">
+        <div class="seg seg-info" style="width:40%"></div>
+        <div class="seg seg-trans" style="width:45%"></div>
+        <div class="seg seg-comm" style="width:10%"></div>
+        <div class="seg seg-unknown" style="width:5%"></div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">55,300</div><div class="lbl">Monthly Vol</div></div>
+        <div class="metric"><div class="num">2</div><div class="lbl">Keywords</div></div>
+        <div class="metric"><div class="num" style="color:var(--gold)">45</div><div class="lbl">Avg KD</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Moon jellyfish tanks are the ultimate luxury conversation piece. "Jellyfish tank" is 6.6K/mo at KD 7 &mdash; incredibly easy win. Pairs with premium tank equipment cross-sells.</p>
+      <div class="card-kws">
+        <span class="kw-tag">moon jellyfish 40.5K</span>
+        <span class="kw-tag">jellyfish tank 6.6K (KD:7!)</span>
+      </div>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 2-3 Products</span>
+        <span class="action-tag action-species">+ Species Guide</span>
+        <span class="action-tag action-blog">+ "Jellyfish Tank Setup" Post</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--drift);margin:40px 0 16px">Thin Coverage in Existing Categories (Needs Expansion)</h3>
+
+  <div class="card-grid">
+
+    <!-- BETTA EXPANSION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Betta &mdash; Thin Coverage</div>
+        <span class="card-badge badge-critical">199K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">199,000</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">16</div><div class="lbl">Orphan KWs</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">The Betta category exists but has minimal content. "Betta fish for sale" is 14.8K/mo. Need exotic varieties (Galaxy Koi, Samurai, Alien), species guides, and care content to dominate.</p>
+      <div class="card-actions">
+        <span class="action-tag action-product">+ 6-8 Exotic Betta Products</span>
+        <span class="action-tag action-species">+ 3 Species Guides</span>
+        <span class="action-tag action-care">+ Betta Care Guide</span>
+        <span class="action-tag action-blog">+ "Betta Types" List Post</span>
+        <span class="action-tag action-collection">+ Buy Collection Page</span>
+      </div>
+    </div>
+
+    <!-- TETRA -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Tetra &mdash; Not on Site</div>
+        <span class="card-badge badge-critical">149K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">149,390</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">14</div><div class="lbl">Keywords</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">No tetra category exists. Neon, ember, and cardinal tetras are foundational schooling fish. "Tetra" alone is 33.1K/mo. Add as supporting category &mdash; perfect tank mates for premium species.</p>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 4-6 Products</span>
+        <span class="action-tag action-species">+ 2 Species Guides</span>
+      </div>
+    </div>
+
+    <!-- GUPPY / ENDLER -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Guppy / Endler &mdash; Not on Site</div>
+        <span class="card-badge badge-high">102K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">102,720</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">9</div><div class="lbl">Keywords</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Show-quality guppies and rare Endler's livebearers can command $50-200+. "Guppy" is 33.1K/mo. Position as "show-grade" and "collector-grade" to stay on-brand.</p>
+      <div class="card-actions">
+        <span class="action-tag action-hub">+ Category Hub</span>
+        <span class="action-tag action-product">+ 4-6 Products</span>
+        <span class="action-tag action-species">+ 2 Species Guides</span>
+      </div>
+    </div>
+
+    <!-- CATFISH EXPANSION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Catfish &mdash; Needs Expansion</div>
+        <span class="card-badge badge-high">102K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">102,560</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">34</div><div class="lbl">Orphan KWs</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">7 catfish products exist but the category misses huge opportunities: Corydoras (12.1K), Pictus (6.6K), Otocinclus (9.9K). Need species guides for each existing product plus new additions.</p>
+      <div class="card-actions">
+        <span class="action-tag action-product">+ 5 New Products</span>
+        <span class="action-tag action-species">+ 4 Species Guides</span>
+        <span class="action-tag action-care">+ Catfish Care Guide</span>
+        <span class="action-tag action-blog">+ "Types of Catfish" Hub Post</span>
+      </div>
+    </div>
+
+    <!-- CICHLID EXPANSION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Cichlid &mdash; Needs Expansion</div>
+        <span class="card-badge badge-high">92K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">92,800</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">26</div><div class="lbl">Orphan KWs</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">African cichlids (12.1K), Jack Dempsey (9.9K), Blood Parrot (5.4K) all missing. Category has 7 products but needs 15+ for authority. The "cichlids" head term alone is 18.1K/mo.</p>
+      <div class="card-actions">
+        <span class="action-tag action-product">+ 8 New Products</span>
+        <span class="action-tag action-species">+ 5 Species Guides</span>
+        <span class="action-tag action-care">+ African Cichlid Care</span>
+        <span class="action-tag action-blog">+ "Types of Cichlids" List</span>
+      </div>
+    </div>
+
+    <!-- EEL EXPANSION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Eel &mdash; Needs Expansion</div>
+        <span class="card-badge badge-high">86K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">86,190</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">10</div><div class="lbl">Orphan KWs</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Only electric eel on site. "Moray eel" is 33.1K/mo, "fire eel" 4.4K, "ribbon eel" 5.4K. Morays and fire eels are premium aquarium species &mdash; natural TheFinnery products.</p>
+      <div class="card-actions">
+        <span class="action-tag action-product">+ 4 New Products</span>
+        <span class="action-tag action-species">+ 3 Species Guides</span>
+        <span class="action-tag action-care">+ Eel Care Guide</span>
+      </div>
+    </div>
+
+    <!-- PLECO EXPANSION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Pleco &mdash; Needs Expansion</div>
+        <span class="card-badge badge-medium">85K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">85,440</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">15</div><div class="lbl">Orphan KWs</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">5 plecos on site but missing Bristlenose (12.1K), the head term "pleco" (22.2K). Need a comprehensive "Types of Plecos" hub and species guides for each existing product.</p>
+      <div class="card-actions">
+        <span class="action-tag action-product">+ 4 New Products</span>
+        <span class="action-tag action-species">+ 4 Species Guides</span>
+        <span class="action-tag action-blog">+ "Types of Plecos" Hub</span>
+      </div>
+    </div>
+
+    <!-- LOACH EXPANSION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Loach &mdash; Needs Expansion</div>
+        <span class="card-badge badge-medium">78K UNCAPTURED</span>
+      </div>
+      <div class="card-metrics">
+        <div class="metric"><div class="num" style="color:var(--lagoon)">78,800</div><div class="lbl">Non-Clustered Vol</div></div>
+        <div class="metric"><div class="num">8</div><div class="lbl">Orphan KWs</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--drift);line-height:1.6">Only Tiger Loach + Clown Loach on site. Kuhli Loach (18.1K), Hillstream Loach (9.9K), Dojo Loach (8.1K) all missing. Low KD across the board &mdash; easy authority wins.</p>
+      <div class="card-actions">
+        <span class="action-tag action-product">+ 3 New Products</span>
+        <span class="action-tag action-species">+ 3 Species Guides</span>
+        <span class="action-tag action-care">+ Loach Care Guide</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HUB ARCHITECTURE ===================== -->
+<div class="section" id="hubs">
+  <h2 class="section-title">Hub & Spoke Architecture</h2>
+  <p class="section-desc">Each hub page acts as a topical pillar linking to species guides, care guides, products, and blog posts. This structure signals topical depth to Google and prevents cannibalization by establishing clear URL hierarchies.</p>
+
+  <!-- HUB 1: Exotic Fish -->
+  <div class="hub-visual">
+    <div class="hub-center">
+      <div class="hub-name">Exotic Fish for Sale</div>
+      <div class="hub-url">/en/exotic-fish/ &rarr; Master Hub (EXISTS)</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--lagoon);margin-top:4px">93,520 vol/mo &middot; 287 keywords</div>
+    </div>
+    <div class="hub-spokes">
+      <div class="spoke"><span class="spoke-type action-hub">CAT</span><span class="spoke-line"></span>/exotic-fish/arowana/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-hub">CAT</span><span class="spoke-line"></span>/exotic-fish/cichlid/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-hub">CAT</span><span class="spoke-line"></span>/exotic-fish/catfish/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-hub">CAT</span><span class="spoke-line"></span>/exotic-fish/pufferfish/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-hub">CAT</span><span class="spoke-line"></span>/exotic-fish/discus/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-hub">CAT</span><span class="spoke-line"></span>/exotic-fish/tang/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/axolotl/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/goldfish/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/koi/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/shark/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/shrimp/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/seahorse/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/jellyfish/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/snail/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/tetra/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+      <div class="spoke"><span class="spoke-type action-product">NEW</span><span class="spoke-line"></span>/exotic-fish/guppy/ <span style="color:var(--ember);font-size:11px;margin-left:auto">NEEDED</span></div>
+    </div>
+  </div>
+
+  <!-- HUB 2: Species Guides -->
+  <div class="hub-visual">
+    <div class="hub-center">
+      <div class="hub-name">Species Encyclopedia</div>
+      <div class="hub-url">/en/species/ &rarr; Species Hub (EXISTS &mdash; 29 guides, needs 90)</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--ember);margin-top:4px">61 species guides missing</div>
+    </div>
+    <div class="hub-spokes">
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Axolotl Complete Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">228K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Kuhli Loach Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">18.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Moray Eel Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">33.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Moon Jellyfish Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">40.5K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Bamboo Shark Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">8.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Ranchu Goldfish Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">12.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Neon Tetra Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">22.2K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Ghost Shrimp Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">18.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Seahorse Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">33.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Bristlenose Pleco Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">12.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>African Cichlids Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">12.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-species">GUIDE</span><span class="spoke-line"></span>Fire Eel Guide <span style="color:var(--ember);font-size:11px;margin-left:auto">4.4K vol</span></div>
+    </div>
+  </div>
+
+  <!-- HUB 3: Buy Collections -->
+  <div class="hub-visual">
+    <div class="hub-center">
+      <div class="hub-name">Curated Buy Collections</div>
+      <div class="hub-url">/en/buy/{slug}/ &rarr; Transactional Landing Pages</div>
+      <div style="font-family:var(--font-mono);font-size:12px;color:var(--gold);margin-top:4px">13 new collection pages needed</div>
+    </div>
+    <div class="hub-spokes">
+      <div class="spoke"><span class="spoke-type action-collection">BUY</span><span class="spoke-line"></span>/buy/exotic-fish-for-sale/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">BUY</span><span class="spoke-line"></span>/buy/rare-fish-for-sale/ <span style="color:var(--kelp);font-size:11px;margin-left:auto">LIVE</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/axolotl-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">40.5K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/betta-fish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">14.8K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/discus-fish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">3.6K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/goldfish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">4.4K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/koi-fish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">est 2K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/saltwater-fish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">5.4K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/cichlid-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">620 vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/piranha-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">1.8K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/arowana-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">est 1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/best-exotic-fish-beginners/ <span style="color:var(--ember);font-size:11px;margin-left:auto">8.1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/budget-exotic-fish/ <span style="color:var(--ember);font-size:11px;margin-left:auto">est 1K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/monster-fish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">est 2K vol</span></div>
+      <div class="spoke"><span class="spoke-type action-collection">NEW</span><span class="spoke-line"></span>/buy/expensive-fish-for-sale/ <span style="color:var(--ember);font-size:11px;margin-left:auto">est 1K vol</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CANNIBALIZATION ===================== -->
+<div class="section" id="cannibalization">
+  <h2 class="section-title">Cannibalization Risks</h2>
+  <p class="section-desc">Multiple pages competing for the same keyword intent. Each group below shows overlapping targets and the recommended fix to consolidate authority into a single winning URL.</p>
+
+  <div class="cannibal-group">
+    <div class="group-title">1. "Discus" Keyword Sprawl</div>
+    <div class="group-desc">201 non-clustered discus keywords + "discuss fish for sale" cluster + "cobalt blue discus" cluster. Three separate content targets all fighting for "discus fish".</div>
+    <div class="cannibal-item"><span class="ci-name">/exotic-fish/discus/ (Category)</span><span class="ci-vol">Hub page</span></div>
+    <div class="cannibal-item"><span class="ci-name">10 individual discus product pages</span><span class="ci-vol">Products</span></div>
+    <div class="cannibal-item"><span class="ci-name">"discuss fish for sale" cluster</span><span class="ci-vol">270 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"cobalt blue discus" cluster</span><span class="ci-vol">360 vol</span></div>
+    <div class="cannibal-fix"><strong>Fix:</strong> Make /exotic-fish/discus/ the canonical hub for "discus fish" + "discus fish for sale". Each variant (Cobalt Blue, Wild, Pigeon Blood) gets ONE product page targeting its specific variant name. No separate "discus for sale" collection &mdash; the category IS the collection. Internal links from all discus products point UP to the category hub.</div>
+  </div>
+
+  <div class="cannibal-group">
+    <div class="group-title">2. "Catfish" Multi-Cluster Overlap</div>
+    <div class="group-desc">4 catfish clusters ("colorful catfish" 12.8K, "types of catfish" 11.5K, "blue catfish" 820, "catfish with spikes" 640) + 34 non-clustered catfish keywords. Risk of the category page, blog posts, and species guides all targeting "catfish" head term.</div>
+    <div class="cannibal-item"><span class="ci-name">/exotic-fish/catfish/ (Category)</span><span class="ci-vol">Hub for "buy" intent</span></div>
+    <div class="cannibal-item"><span class="ci-name">"colorful catfish" cluster</span><span class="ci-vol">12,840 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"types of catfish" cluster</span><span class="ci-vol">11,490 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"blue catfish for sale" cluster</span><span class="ci-vol">820 vol</span></div>
+    <div class="cannibal-fix"><strong>Fix:</strong> Category page = commercial/transactional ("catfish for sale"). Create ONE blog post for "types of catfish" (informational hub &mdash; 11.5K vol). "Colorful catfish" maps to a section within that blog post, NOT a separate page. Each species gets its own product page + species guide. "Blue catfish" maps to a specific product page.</div>
+  </div>
+
+  <div class="cannibal-group">
+    <div class="group-title">3. "Knife Fish" Fragmentation</div>
+    <div class="group-desc">5 separate knife fish clusters (clown knife, black ghost, aba aba, brown, glass) + the non-clustered "ghost knife fish" (6.6K) and "knife fish" head term (4.4K). Without a pillar, Google doesn't know which page to rank.</div>
+    <div class="cannibal-item"><span class="ci-name">/exotic-fish/knife-fish/ (Category)</span><span class="ci-vol">Hub page</span></div>
+    <div class="cannibal-item"><span class="ci-name">"clown knife fish for sale" cluster</span><span class="ci-vol">3,010 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"knife fish black ghost" cluster</span><span class="ci-vol">1,570 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"aba aba knife fish" cluster</span><span class="ci-vol">520 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"brown knife fish" cluster</span><span class="ci-vol">1,140 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"glass knifefish" cluster</span><span class="ci-vol">370 vol</span></div>
+    <div class="cannibal-fix"><strong>Fix:</strong> Category page targets "knife fish for sale" + "knife fish" head term. Each species has ONE product page targeting "[species] knife fish for sale" and ONE species guide targeting "[species] knife fish care". No overlapping "for sale" pages. Category page links down to all species; species pages link up to category.</div>
+  </div>
+
+  <div class="cannibal-group">
+    <div class="group-title">4. "Puffer Fish" Split Intent</div>
+    <div class="group-desc">"puffer fish" head term (60.5K) sits in non-clustered. "fresh water puffer fish" cluster (5.2K) and "fahaka puffer for sale" cluster (520) exist. The /exotic-fish/pufferfish/ category page and individual product pages could compete.</div>
+    <div class="cannibal-item"><span class="ci-name">/exotic-fish/pufferfish/ (Category)</span><span class="ci-vol">Hub page</span></div>
+    <div class="cannibal-item"><span class="ci-name">"puffer fish" non-clustered</span><span class="ci-vol">60,500 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"fresh water puffer fish" cluster</span><span class="ci-vol">5,170 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"pea puffer" non-clustered</span><span class="ci-vol">18,100 vol</span></div>
+    <div class="cannibal-fix"><strong>Fix:</strong> Category page owns "puffer fish for sale" + "freshwater puffer fish". Add a blog post for "Types of Puffer Fish" (informational hub for the 60.5K head term). Pea Puffer gets its own product + species guide. Each product page targets "[name] puffer for sale" only.</div>
+  </div>
+
+  <div class="cannibal-group">
+    <div class="group-title">5. "Cichlid" Cluster Sprawl</div>
+    <div class="group-desc">8 separate cichlid-related clusters + the head term "cichlids" (18.1K) in non-clustered. Risk of flowerhorn, dovii, severum, frontosa, jack dempsey, and oscar all competing for "cichlid for sale".</div>
+    <div class="cannibal-item"><span class="ci-name">/exotic-fish/cichlid/ (Category)</span><span class="ci-vol">Hub page</span></div>
+    <div class="cannibal-item"><span class="ci-name">"flowerhorn cichlid" cluster</span><span class="ci-vol">6,800 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"starry night cichlid" cluster</span><span class="ci-vol">1,440 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"dovii cichlid for sale" cluster</span><span class="ci-vol">710 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"electric blue texas" cluster</span><span class="ci-vol">500 vol</span></div>
+    <div class="cannibal-item"><span class="ci-name">"cichlid for sale" cluster</span><span class="ci-vol">620 vol</span></div>
+    <div class="cannibal-fix"><strong>Fix:</strong> Category page owns "cichlid for sale" and "cichlids" (18.1K). Kill the generic "cichlid for sale" cluster &mdash; that's the category page's job. Each species-specific cluster maps to ONE product page + ONE species guide. Create "Types of Cichlids" blog post for the informational head term.</div>
+  </div>
+
+  <div class="cannibal-group">
+    <div class="group-title">6. "Exotic Fish for Sale" vs Product Pages</div>
+    <div class="group-desc">The 287-keyword "exotic fish for sale usa" cluster could cannibalize both the /buy/exotic-fish-for-sale/ collection AND the /exotic-fish/ master category. Two pages fighting for the same commercial intent.</div>
+    <div class="cannibal-item"><span class="ci-name">/exotic-fish/ (Master Category)</span><span class="ci-vol">Informational hub</span></div>
+    <div class="cannibal-item"><span class="ci-name">/buy/exotic-fish-for-sale/ (Collection)</span><span class="ci-vol">93,520 vol cluster</span></div>
+    <div class="cannibal-fix"><strong>Fix:</strong> /exotic-fish/ = informational pillar (browse, learn, discover). /buy/exotic-fish-for-sale/ = transactional landing page (buy now, curated picks, price-led). Differentiate H1s: "Exotic Fish Species" vs "Buy Exotic Fish Online &mdash; Live Arrival Guaranteed". Internal links from category go TO /buy/ for purchase intent; /buy/ links back to category for browsing.</div>
+  </div>
+</div>
+
+<!-- ===================== ALL CLUSTERS ===================== -->
+<div class="section" id="clusters">
+  <h2 class="section-title">All Keyword Clusters</h2>
+  <p class="section-desc">Every cluster from the keyword research, sorted by volume. Use the filters to find specific intents or priority levels.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All (111)</button>
+    <button class="filter-btn" data-filter="high">High Vol (&gt;2K)</button>
+    <button class="filter-btn" data-filter="info">Informational</button>
+    <button class="filter-btn" data-filter="trans">Transactional</button>
+    <button class="filter-btn" data-filter="comm">Commercial</button>
+    <button class="filter-btn" data-filter="lowkd">Low KD (&lt;15)</button>
+  </div>
+
+  <table class="data-table" id="clusterTable">
+    <thead>
+      <tr>
+        <th data-sort="rank">#</th>
+        <th data-sort="cluster">Cluster</th>
+        <th data-sort="volume">Volume</th>
+        <th data-sort="keywords">KWs</th>
+        <th data-sort="kd">Avg KD</th>
+        <th data-sort="intent">Dominant Intent</th>
+        <th>Intent Mix</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="clusterBody">
+    </tbody>
+  </table>
+</div>
+
+<!-- ===================== ROADMAP ===================== -->
+<div class="section" id="roadmap">
+  <h2 class="section-title">Implementation Roadmap</h2>
+  <p class="section-desc">Phased content rollout prioritized by volume opportunity, keyword difficulty, and brand alignment. Each phase builds topical authority without cannibalizing existing pages.</p>
+
+  <div class="summary-grid" style="margin-bottom:48px">
+    <div class="summary-box">
+      <h3>Phase 1 Volume Capture</h3>
+      <div class="big-num" style="color:var(--ember)">~580K</div>
+      <p style="color:var(--drift);font-size:13px;margin-top:4px">Monthly searches addressable</p>
+    </div>
+    <div class="summary-box">
+      <h3>New Pages Phase 1</h3>
+      <div class="big-num" style="color:var(--lagoon)">52</div>
+      <p style="color:var(--drift);font-size:13px;margin-top:4px">Category + product + content pages</p>
+    </div>
+    <div class="summary-box">
+      <h3>Total New Pages (All Phases)</h3>
+      <div class="big-num" style="color:var(--gold)">147</div>
+      <p style="color:var(--drift);font-size:13px;margin-top:4px">Full topical authority build-out</p>
+    </div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="roadmap-phase">
+    <div class="phase-dot active"></div>
+    <div class="phase-title">Phase 1 &mdash; Critical Gaps & Quick Wins</div>
+    <div class="phase-subtitle">Weeks 1-4 &middot; 52 new pages &middot; ~580K addressable volume</div>
+    <div class="phase-items">
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Axolotl Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 4 products + species guide + 2 care guides</span></div><span class="pi-vol">228K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Koi Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 6 products + 2 species guides + care guide</span></div><span class="pi-vol">107K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Goldfish Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 5 products (Ranchu, Oranda, Lionhead) + 2 species guides</span></div><span class="pi-vol">158K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>Betta Expansion</strong><br><span style="color:var(--drift);font-size:12px">+6 exotic betta products + 2 species guides + care guide</span></div><span class="pi-vol">199K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>"Types of Catfish" Blog Hub</strong><br><span style="color:var(--drift);font-size:12px">Informational pillar targeting 11.5K head term</span></div><span class="pi-vol">11.5K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>"Types of Cichlids" Blog Hub</strong><br><span style="color:var(--drift);font-size:12px">Informational pillar targeting 18.1K head term</span></div><span class="pi-vol">18.1K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>3 Buy Collection Pages</strong><br><span style="color:var(--drift);font-size:12px">axolotl-for-sale, betta-fish-for-sale, goldfish-for-sale</span></div><span class="pi-vol">59K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>Cannibalization Fixes</strong><br><span style="color:var(--drift);font-size:12px">Consolidate discus, catfish, cichlid, knife fish page intents</span></div><span class="pi-vol">Internal</span></div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="roadmap-phase">
+    <div class="phase-dot"></div>
+    <div class="phase-title">Phase 2 &mdash; Category Expansion</div>
+    <div class="phase-subtitle">Weeks 5-8 &middot; 45 new pages &middot; ~370K addressable volume</div>
+    <div class="phase-items">
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Shark Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 5 products + 3 species guides</span></div><span class="pi-vol">101K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Shrimp Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 6 products + 2 species guides + care guide</span></div><span class="pi-vol">89.5K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Seahorse Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 3 products + species guide + care guide</span></div><span class="pi-vol">47.4K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Jellyfish Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 2 products + species guide + "tank setup" blog</span></div><span class="pi-vol">55.3K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>Eel Expansion</strong><br><span style="color:var(--drift);font-size:12px">+3 products (moray, fire, ribbon) + 3 species guides</span></div><span class="pi-vol">86K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>Cichlid Expansion</strong><br><span style="color:var(--drift);font-size:12px">+5 products (African, JD, Blood Parrot) + 3 species guides</span></div><span class="pi-vol">92.8K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>5 Buy Collection Pages</strong><br><span style="color:var(--drift);font-size:12px">discus, saltwater, cichlid, piranha, arowana for-sale</span></div><span class="pi-vol">~12K vol</span></div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="roadmap-phase">
+    <div class="phase-dot"></div>
+    <div class="phase-title">Phase 3 &mdash; Depth & Long-Tail Authority</div>
+    <div class="phase-subtitle">Weeks 9-12 &middot; 50 new pages &middot; ~250K addressable volume</div>
+    <div class="phase-items">
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Tetra Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 4 products + 2 species guides</span></div><span class="pi-vol">149K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Guppy/Endler Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 4 products + 2 species guides</span></div><span class="pi-vol">102K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--ember)">&#9632;</span><div class="pi-text"><strong>Snail Category</strong><br><span style="color:var(--drift);font-size:12px">Hub + 4 products + 2 species guides</span></div><span class="pi-vol">76K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>Loach Expansion</strong><br><span style="color:var(--drift);font-size:12px">+3 products (Kuhli, Hillstream, Dojo) + 3 species guides</span></div><span class="pi-vol">78.8K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>Pleco Expansion</strong><br><span style="color:var(--drift);font-size:12px">+3 products (Bristlenose, Zebra, Royal) + 3 species guides</span></div><span class="pi-vol">85.4K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--lagoon)">&#9632;</span><div class="pi-text"><strong>Catfish Expansion</strong><br><span style="color:var(--drift);font-size:12px">+4 products (Corydoras, Pictus, Oto) + 3 species guides</span></div><span class="pi-vol">102K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--violet)">&#9632;</span><div class="pi-text"><strong>10 Blog Posts</strong><br><span style="color:var(--drift);font-size:12px">Types of Plecos, Puffer Types, Loach Guide, Shark Tank Setup, etc.</span></div><span class="pi-vol">Various</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>5 Buy Collection Pages</strong><br><span style="color:var(--drift);font-size:12px">monster-fish, budget-exotic, best-beginners, expensive-fish</span></div><span class="pi-vol">~12K vol</span></div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="roadmap-phase">
+    <div class="phase-dot"></div>
+    <div class="phase-title">Phase 4 &mdash; Informational Moat</div>
+    <div class="phase-subtitle">Ongoing &middot; Blog + care guide cadence &middot; Capture remaining long-tail</div>
+    <div class="phase-items">
+      <div class="phase-item"><span class="pi-icon" style="color:var(--violet)">&#9632;</span><div class="pi-text"><strong>Remaining 40+ Blog Posts</strong><br><span style="color:var(--drift);font-size:12px">Fish care, tank setup, compatibility, legal guides, price guides</span></div><span class="pi-vol">Ongoing</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--violet)">&#9632;</span><div class="pi-text"><strong>Remaining 30+ Care Guides</strong><br><span style="color:var(--drift);font-size:12px">Every species gets water params, tank setup, feeding, breeding</span></div><span class="pi-vol">Ongoing</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--violet)">&#9632;</span><div class="pi-text"><strong>Remaining 25+ Species Guides</strong><br><span style="color:var(--drift);font-size:12px">Every product should have a matching species guide</span></div><span class="pi-vol">Ongoing</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>Freshwater Hub Page</strong><br><span style="color:var(--drift);font-size:12px">/freshwater-fish/ pillar page linking to all FW categories</span></div><span class="pi-vol">114K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>Saltwater Hub Page</strong><br><span style="color:var(--drift);font-size:12px">/saltwater-fish/ pillar page linking to all SW categories</span></div><span class="pi-vol">69K vol</span></div>
+      <div class="phase-item"><span class="pi-icon" style="color:var(--gold)">&#9632;</span><div class="pi-text"><strong>i18n Content Translation</strong><br><span style="color:var(--drift);font-size:12px">German, Dutch, French, Spanish, Japanese rollout</span></div><span class="pi-vol">9 locales</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== TAB SWITCHING =====
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== CLUSTER TABLE DATA =====
+const clusters = [
+  {r:1,c:"exotic fish for sale usa",v:93520,k:287,kd:28,di:"Commercial",covered:true},
+  {r:2,c:"aquarium wolf fish",v:17450,k:18,kd:13,di:"Informational",covered:false},
+  {r:3,c:"colorful catfish",v:12840,k:42,kd:12,di:"Transactional",covered:true},
+  {r:4,c:"types of catfish",v:11490,k:4,kd:33,di:"Informational",covered:false},
+  {r:5,c:"flowerhorn cichlid",v:6800,k:4,kd:12,di:"Informational",covered:true},
+  {r:6,c:"pet platinum arowana",v:5840,k:104,kd:2,di:"Unknown",covered:true},
+  {r:7,c:"fresh water puffer fish",v:5170,k:18,kd:5,di:"Transactional",covered:true},
+  {r:8,c:"dragon goby",v:4220,k:10,kd:11,di:"Transactional",covered:true},
+  {r:9,c:"rare fish",v:4120,k:6,kd:13,di:"Informational",covered:true},
+  {r:10,c:"g.e.m. tang",v:4060,k:70,kd:1,di:"Unknown",covered:true},
+  {r:11,c:"albino gar",v:3900,k:31,kd:7,di:"Informational",covered:true},
+  {r:12,c:"long fish for tank",v:3340,k:8,kd:32,di:"Informational",covered:false},
+  {r:13,c:"exotic oscar fish for sale",v:3060,k:16,kd:7,di:"Transactional",covered:true},
+  {r:14,c:"clown knife fish for sale",v:3010,k:10,kd:7,di:"Transactional",covered:true},
+  {r:15,c:"short body albino silver arowana",v:2950,k:4,kd:6,di:"Informational",covered:true},
+  {r:16,c:"arapaima gigas",v:2500,k:4,kd:29,di:"Informational",covered:true},
+  {r:17,c:"electric eel freshwater",v:2070,k:6,kd:13,di:"Transactional",covered:true},
+  {r:18,c:"albino shark",v:2050,k:3,kd:8,di:"Informational",covered:true},
+  {r:19,c:"peppermint angel",v:1910,k:54,kd:1,di:"Unknown",covered:true},
+  {r:20,c:"elephantnose fish",v:1860,k:3,kd:12,di:"Transactional",covered:true},
+  {r:21,c:"pet piranha fish for sale",v:1830,k:17,kd:9,di:"Transactional",covered:true},
+  {r:22,c:"shovelnose tiger",v:1790,k:5,kd:11,di:"Informational",covered:true},
+  {r:23,c:"cory catfish green",v:1680,k:5,kd:9,di:"Informational",covered:false},
+  {r:24,c:"exotic aquarium photos",v:1680,k:3,kd:19,di:"Commercial",covered:false},
+  {r:25,c:"knife fish black ghost",v:1570,k:3,kd:29,di:"Info/Trans",covered:true},
+  {r:26,c:"snowball pleco",v:1440,k:3,kd:7,di:"Informational",covered:true},
+  {r:27,c:"starry night cichlid",v:1440,k:2,kd:2,di:"Transactional",covered:true},
+  {r:28,c:"irwini catfish for sale",v:1250,k:5,kd:3,di:"Transactional",covered:true},
+  {r:29,c:"peacock bass for sale",v:1200,k:3,kd:17,di:"Informational",covered:true},
+  {r:30,c:"figure eight puffer fish",v:1190,k:5,kd:17,di:"Info/Trans",covered:true},
+  {r:31,c:"brown knife fish",v:1140,k:5,kd:10,di:"Informational",covered:true},
+  {r:32,c:"silver dollars fish for sale",v:950,k:7,kd:11,di:"Informational",covered:false},
+  {r:33,c:"types of aggressive fish",v:900,k:6,kd:10,di:"Informational",covered:false},
+  {r:34,c:"clown loach for sale",v:870,k:4,kd:4,di:"Transactional",covered:true},
+  {r:35,c:"turquoise severum cichlid",v:870,k:3,kd:11,di:"Informational",covered:true},
+  {r:36,c:"blue catfish for sale",v:820,k:7,kd:10,di:"Informational",covered:false},
+  {r:37,c:"platinum gar",v:820,k:3,kd:22,di:"Transactional",covered:true},
+  {r:38,c:"pleco vampire",v:780,k:2,kd:2,di:"Informational",covered:true},
+  {r:39,c:"angel koi fish",v:740,k:2,kd:11,di:"Informational",covered:true},
+  {r:40,c:"dovii cichlid for sale",v:710,k:5,kd:1,di:"Transactional",covered:true},
+  {r:41,c:"neptune grouper",v:690,k:3,kd:11,di:"Info/Trans",covered:true},
+  {r:42,c:"bumblebee catfish size",v:650,k:5,kd:8,di:"Informational",covered:true},
+  {r:43,c:"catfish with spikes on side",v:640,k:3,kd:17,di:"Informational",covered:false},
+  {r:44,c:"flagtail prochilodus",v:630,k:3,kd:11,di:"Info/Trans",covered:true},
+  {r:45,c:"cichlid for sale",v:620,k:3,kd:26,di:"Transactional",covered:true},
+  {r:46,c:"tiger fish for sale",v:620,k:8,kd:4,di:"Transactional",covered:false},
+  {r:47,c:"large common pleco for sale",v:610,k:7,kd:4,di:"Transactional",covered:false},
+  {r:48,c:"roseline barb",v:610,k:6,kd:8,di:"Informational",covered:true},
+  {r:49,c:"altum angelfish for sale",v:570,k:6,kd:10,di:"Unknown",covered:true},
+  {r:50,c:"rosy barb for sale",v:570,k:5,kd:5,di:"Transactional",covered:false},
+  {r:51,c:"vampire fish aquarium",v:570,k:4,kd:3,di:"Transactional",covered:true},
+  {r:52,c:"electric blue jack dempsey for sale",v:530,k:4,kd:5,di:"Transactional",covered:false},
+  {r:53,c:"tiger loach",v:530,k:2,kd:12,di:"Informational",covered:true},
+  {r:54,c:"aba aba knife fish",v:520,k:2,kd:4,di:"Informational",covered:true},
+  {r:55,c:"fahaka puffer fish for sale",v:520,k:3,kd:7,di:"Transactional",covered:true},
+  {r:56,c:"blue zaire frontosa for sale",v:500,k:3,kd:4,di:"Transactional",covered:true},
+  {r:57,c:"electric blue texas cichlid",v:500,k:3,kd:17,di:"Informational",covered:false},
+  {r:58,c:"glofish purple",v:480,k:7,kd:19,di:"Informational",covered:false},
+  {r:59,c:"iridescent sharks",v:460,k:2,kd:15,di:"Informational",covered:false},
+  {r:60,c:"blue panaque pleco",v:450,k:3,kd:3,di:"Informational",covered:true},
+  {r:61,c:"gold severum cichlid",v:450,k:3,kd:2,di:"Informational",covered:true},
+  {r:62,c:"big fish aquariums for sale",v:410,k:5,kd:14,di:"Transactional",covered:false},
+  {r:63,c:"macaw cichlid",v:400,k:3,kd:6,di:"Informational",covered:true},
+  {r:64,c:"marble achara catfish",v:390,k:4,kd:3,di:"Informational",covered:true},
+  {r:65,c:"bichir fish for sale",v:380,k:4,kd:1,di:"Transactional",covered:false},
+  {r:66,c:"longfin albino bristlenose",v:380,k:3,kd:2,di:"Info/Comm",covered:true},
+  {r:67,c:"glass knifefish",v:370,k:2,kd:8,di:"Info/Trans",covered:true},
+  {r:68,c:"green terror cichlid for sale",v:370,k:3,kd:1,di:"Informational",covered:false},
+  {r:69,c:"cobalt blue discus",v:360,k:4,kd:1,di:"Informational",covered:true},
+  {r:70,c:"can tarpon live in freshwater",v:340,k:4,kd:3,di:"Informational",covered:false},
+  {r:71,c:"red parrot fish for sale",v:340,k:4,kd:7,di:"Transactional",covered:false},
+  {r:72,c:"red tail giant gourami",v:330,k:3,kd:7,di:"Info/Trans",covered:false},
+  {r:73,c:"distichodus sexfasciatus",v:320,k:4,kd:8,di:"Informational",covered:true},
+  {r:74,c:"exotic shop",v:320,k:2,kd:26,di:"Unknown",covered:false},
+  {r:75,c:"long fin oscar",v:310,k:2,kd:2,di:"Info/Trans",covered:false},
+  {r:76,c:"pike cichlid for sale",v:310,k:3,kd:4,di:"Transactional",covered:false},
+  {r:77,c:"grouper for sale",v:300,k:2,kd:6,di:"Transactional",covered:true},
+  {r:78,c:"discuss fish for sale",v:270,k:4,kd:6,di:"Unknown",covered:true},
+  {r:79,c:"three beacon pleco",v:260,k:4,kd:2,di:"Informational",covered:true},
+  {r:80,c:"black lancer catfish",v:240,k:2,kd:0,di:"Commercial",covered:true},
+  {r:81,c:"blue acara for sale",v:240,k:2,kd:5,di:"Transactional",covered:false},
+  {r:82,c:"columbian sharks",v:230,k:2,kd:5,di:"Informational",covered:false},
+  {r:83,c:"huge freshwater fish",v:230,k:2,kd:3,di:"Informational",covered:false},
+  {r:84,c:"pink jack dempsey cichlid",v:230,k:2,kd:7,di:"Informational",covered:false},
+  {r:85,c:"exotic betta fish for sale",v:210,k:6,kd:1,di:"Unknown",covered:false},
+  {r:86,c:"starfire red angelfish",v:210,k:2,kd:3,di:"Info/Trans",covered:true},
+  {r:87,c:"bladefin basslet",v:190,k:2,kd:3,di:"Informational",covered:true},
+  {r:88,c:"checkerboard cichlids",v:190,k:2,kd:5,di:"Info/Trans",covered:true},
+  {r:89,c:"datnoid for sale",v:180,k:2,kd:3,di:"Transactional",covered:false},
+  {r:90,c:"gem tang concert",v:180,k:11,kd:0,di:"Unknown",covered:false},
+  {r:91,c:"golden basslet",v:180,k:3,kd:5,di:"Informational",covered:true},
+  {r:92,c:"lungfish for sale",v:180,k:2,kd:3,di:"Transactional",covered:true},
+  {r:93,c:"synodontis ocellifer",v:180,k:2,kd:3,di:"Info/Trans",covered:false},
+  {r:94,c:"loxozonus corydoras",v:160,k:2,kd:2,di:"Info/Trans",covered:false},
+  {r:95,c:"black sharkminnow",v:150,k:3,kd:5,di:"Informational",covered:false},
+  {r:96,c:"cross river puffer for sale",v:110,k:2,kd:3,di:"Transactional",covered:true},
+  {r:97,c:"avacado puffer",v:90,k:2,kd:3,di:"Informational",covered:true},
+  {r:98,c:"grass cutter catfish",v:90,k:2,kd:1,di:"Informational",covered:true},
+  {r:99,c:"freshwater stingray cost",v:80,k:2,kd:3,di:"Transactional",covered:true},
+  {r:100,c:"gem tang instagram",v:80,k:5,kd:0,di:"Unknown",covered:false},
+  {r:101,c:"rare tang fish",v:60,k:2,kd:5,di:"Info/Comm",covered:true},
+  {r:102,c:"tomie tang violet gems",v:60,k:3,kd:0,di:"Unknown",covered:false},
+  {r:103,c:"platinum arowana snorkel mask",v:30,k:2,kd:0,di:"Unknown",covered:false},
+  {r:104,c:"exotic fish for sale uk",v:20,k:2,kd:0,di:"Unknown",covered:false},
+  {r:105,c:"gem tang and yoga lin",v:20,k:2,kd:0,di:"Unknown",covered:false},
+  {r:106,c:"gem tang song",v:20,k:2,kd:0,di:"Unknown",covered:false},
+  {r:107,c:"exotic fish for sale south africa",v:10,k:2,kd:0,di:"Unknown",covered:false},
+  {r:108,c:"exotic fish for sale in india",v:0,k:4,kd:0,di:"Unknown",covered:false},
+  {r:109,c:"how to breed platinum arowana",v:0,k:2,kd:0,di:"Unknown",covered:false},
+  {r:110,c:"peppermint angelfish divers den",v:0,k:2,kd:0,di:"Unknown",covered:false},
+  {r:111,c:"platinum arowana fish price in mumbai",v:0,k:4,kd:0,di:"Unknown",covered:false},
+];
+
+function getKdClass(kd) {
+  if (kd < 15) return 'td-kd-low';
+  if (kd < 35) return 'td-kd-med';
+  return 'td-kd-high';
+}
+
+function getIntentColor(intent) {
+  if (intent.includes('Transactional')) return 'var(--ember)';
+  if (intent.includes('Commercial')) return 'var(--gold)';
+  if (intent.includes('Informational')) return 'var(--lagoon)';
+  return 'var(--drift)';
+}
+
+function renderTable(data) {
+  const body = document.getElementById('clusterBody');
+  body.innerHTML = data.map((c, i) => `
+    <tr>
+      <td class="td-mono" style="color:var(--drift)">${c.r}</td>
+      <td class="td-cluster">${c.c}</td>
+      <td class="td-mono td-vol">${c.v.toLocaleString()}</td>
+      <td class="td-mono">${c.k}</td>
+      <td class="td-mono ${getKdClass(c.kd)}">${c.kd}</td>
+      <td style="color:${getIntentColor(c.di)};font-size:12px;font-weight:500">${c.di}</td>
+      <td>
+        <div class="intent-bar" style="width:120px;height:4px">
+          <div class="seg seg-info" style="width:${c.di.includes('Info')?'60':'20'}%"></div>
+          <div class="seg seg-trans" style="width:${c.di.includes('Trans')?'40':'15'}%"></div>
+          <div class="seg seg-comm" style="width:${c.di.includes('Comm')?'30':'10'}%"></div>
+          <div class="seg seg-unknown" style="width:15%"></div>
+        </div>
+      </td>
+      <td><span class="card-badge ${c.covered ? 'badge-covered' : 'badge-new'}" style="font-size:9px">${c.covered ? 'COVERED' : 'GAP'}</span></td>
+    </tr>
+  `).join('');
+}
+
+renderTable(clusters);
+
+// Filters
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    let filtered = clusters;
+    if (f === 'high') filtered = clusters.filter(c => c.v > 2000);
+    if (f === 'info') filtered = clusters.filter(c => c.di.includes('Info'));
+    if (f === 'trans') filtered = clusters.filter(c => c.di.includes('Trans'));
+    if (f === 'comm') filtered = clusters.filter(c => c.di.includes('Comm'));
+    if (f === 'lowkd') filtered = clusters.filter(c => c.kd < 15);
+    renderTable(filtered);
+  });
+});
+
+// Sortable table headers
+let sortDir = {};
+document.querySelectorAll('th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.sort;
+    sortDir[key] = !sortDir[key];
+    const sorted = [...clusters].sort((a, b) => {
+      let va = a[key[0]] ?? a[key], vb = b[key[0]] ?? b[key];
+      if (key === 'cluster') { va = a.c; vb = b.c; }
+      if (key === 'volume') { va = a.v; vb = b.v; }
+      if (key === 'keywords') { va = a.k; vb = b.k; }
+      if (key === 'kd') { va = a.kd; vb = b.kd; }
+      if (key === 'intent') { va = a.di; vb = b.di; }
+      if (key === 'rank') { va = a.r; vb = b.r; }
+      if (typeof va === 'string') return sortDir[key] ? va.localeCompare(vb) : vb.localeCompare(va);
+      return sortDir[key] ? va - vb : vb - va;
+    });
+    renderTable(sorted);
+  });
+});
+</script>
+</body>
+</html>
