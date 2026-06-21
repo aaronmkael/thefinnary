@@ -1,0 +1,607 @@
+{
+  "/Users/aaron/Desktop/thefinnery/.eslintrc.json": {
+    "mtime": 1774444877.058991,
+    "ast_hash": "9b8be5ef96ddd69ecd1ddc1554c61a88",
+    "semantic_hash": "9b8be5ef96ddd69ecd1ddc1554c61a88"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/about/page.tsx": {
+    "mtime": 1775464102.9586313,
+    "ast_hash": "f8e807e065a7f1beb9463b040602f9ce",
+    "semantic_hash": "f8e807e065a7f1beb9463b040602f9ce"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/authors/[slug]/page.tsx": {
+    "mtime": 1775462783.7833652,
+    "ast_hash": "59feeecd52ce02e1746e5e18794d0db1",
+    "semantic_hash": "59feeecd52ce02e1746e5e18794d0db1"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/blog/[slug]/page.tsx": {
+    "mtime": 1775549356.100054,
+    "ast_hash": "9c2e98d678ef9535653fefc462c28755",
+    "semantic_hash": "9c2e98d678ef9535653fefc462c28755"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/blog/page.tsx": {
+    "mtime": 1775473529.474597,
+    "ast_hash": "7601b4d3241e277c042450c3ee207515",
+    "semantic_hash": "7601b4d3241e277c042450c3ee207515"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/bulk-orders/page.tsx": {
+    "mtime": 1775462776.2995489,
+    "ast_hash": "af2fdff01a0f268086d991e6d551cd5c",
+    "semantic_hash": "af2fdff01a0f268086d991e6d551cd5c"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/buy/[slug]/page.tsx": {
+    "mtime": 1775462781.9316463,
+    "ast_hash": "68b0b59b6a2420cfddbdbc9330722d6f",
+    "semantic_hash": "68b0b59b6a2420cfddbdbc9330722d6f"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/care-guides/[slug]/page.tsx": {
+    "mtime": 1775554141.641293,
+    "ast_hash": "d51c449d51c81e9fc59a76cd58561e39",
+    "semantic_hash": "d51c449d51c81e9fc59a76cd58561e39"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/care-guides/page.tsx": {
+    "mtime": 1775473369.1772754,
+    "ast_hash": "0e2b98a5d3b957753e091fdffa485d0d",
+    "semantic_hash": "0e2b98a5d3b957753e091fdffa485d0d"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/cart/page.tsx": {
+    "mtime": 1775462639.9215796,
+    "ast_hash": "8f5957ee8c40ef2a8fdba649da5d0cde",
+    "semantic_hash": "8f5957ee8c40ef2a8fdba649da5d0cde"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/checkout/page.tsx": {
+    "mtime": 1775462640.8657353,
+    "ast_hash": "0d1722f078d5be63153943c05880c8ae",
+    "semantic_hash": "0d1722f078d5be63153943c05880c8ae"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/checkout/success/page.tsx": {
+    "mtime": 1775462641.2691782,
+    "ast_hash": "25d02ce4008d06b9bebf8e308f8da981",
+    "semantic_hash": "25d02ce4008d06b9bebf8e308f8da981"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/contact/page.tsx": {
+    "mtime": 1775462772.1294043,
+    "ast_hash": "37cccf13d25bf309d2de3c9dd351a435",
+    "semantic_hash": "37cccf13d25bf309d2de3c9dd351a435"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/exotic-fish/[category]/[slug]/page.tsx": {
+    "mtime": 1775464102.0719163,
+    "ast_hash": "9da5b9da12a64916f115b9fcf618e194",
+    "semantic_hash": "9da5b9da12a64916f115b9fcf618e194"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/exotic-fish/[category]/page.tsx": {
+    "mtime": 1775464101.1778445,
+    "ast_hash": "34ded01cd8dbd8279d1370edc5223371",
+    "semantic_hash": "34ded01cd8dbd8279d1370edc5223371"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/exotic-fish/page.tsx": {
+    "mtime": 1775463001.5179663,
+    "ast_hash": "8bf1a11bfc941a5043a753d748efc134",
+    "semantic_hash": "8bf1a11bfc941a5043a753d748efc134"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/faq/page.tsx": {
+    "mtime": 1775462774.8119729,
+    "ast_hash": "579536e2857f3b3195f4361e6ce223f8",
+    "semantic_hash": "579536e2857f3b3195f4361e6ce223f8"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/glossary/page.tsx": {
+    "mtime": 1775472349.6926334,
+    "ast_hash": "4f59439a3cdb0e5607db48207b209e23",
+    "semantic_hash": "4f59439a3cdb0e5607db48207b209e23"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/layout.tsx": {
+    "mtime": 1775571102.8034112,
+    "ast_hash": "ac79b8171f3b462057964060e35a8a53",
+    "semantic_hash": "ac79b8171f3b462057964060e35a8a53"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/not-found.tsx": {
+    "mtime": 1774503596.9832766,
+    "ast_hash": "ff00864492085c2a4a27d38c7ac40398",
+    "semantic_hash": "ff00864492085c2a4a27d38c7ac40398"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/page.tsx": {
+    "mtime": 1775462641.9900973,
+    "ast_hash": "13bd2d15d97dae8725ce3d32d9db7bab",
+    "semantic_hash": "13bd2d15d97dae8725ce3d32d9db7bab"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/privacy/page.tsx": {
+    "mtime": 1775464098.9891274,
+    "ast_hash": "43f89c387310c77651d5da798019362f",
+    "semantic_hash": "43f89c387310c77651d5da798019362f"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/returns/page.tsx": {
+    "mtime": 1775464104.289667,
+    "ast_hash": "4ffdb2a133b7562829be89592c835645",
+    "semantic_hash": "4ffdb2a133b7562829be89592c835645"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/shipping/page.tsx": {
+    "mtime": 1775464103.4023118,
+    "ast_hash": "40c5feffbac72d4823c1c4936a0ebb56",
+    "semantic_hash": "40c5feffbac72d4823c1c4936a0ebb56"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/sitemap.xml/route.ts": {
+    "mtime": 1775539294.8675225,
+    "ast_hash": "da0c3ac589911218e05f79181734c454",
+    "semantic_hash": "da0c3ac589911218e05f79181734c454"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/species/[slug]/page.tsx": {
+    "mtime": 1774606413.8635514,
+    "ast_hash": "766799e50e01d6fd5df514285c9b0b28",
+    "semantic_hash": "766799e50e01d6fd5df514285c9b0b28"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/species/page.tsx": {
+    "mtime": 1775551713.9410813,
+    "ast_hash": "25f439ff278759727fe6eadd319e607a",
+    "semantic_hash": "25f439ff278759727fe6eadd319e607a"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/[lang]/terms/page.tsx": {
+    "mtime": 1775464099.8439114,
+    "ast_hash": "2185d37499cb84f8b3acebecf83c32ee",
+    "semantic_hash": "2185d37499cb84f8b3acebecf83c32ee"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/api/checkout/route.ts": {
+    "mtime": 1774452437.1737638,
+    "ast_hash": "907ab0f905cb718f10022cbf6fd8036f",
+    "semantic_hash": "907ab0f905cb718f10022cbf6fd8036f"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/api/og/route.tsx": {
+    "mtime": 1775462650.9371557,
+    "ast_hash": "d4678d5dc1374b1e30dd745be6c7ee28",
+    "semantic_hash": "d4678d5dc1374b1e30dd745be6c7ee28"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/llms-full.txt/route.ts": {
+    "mtime": 1775462654.9274604,
+    "ast_hash": "3725750950ba5082bbe4f6d6723cf9bb",
+    "semantic_hash": "3725750950ba5082bbe4f6d6723cf9bb"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/llms.txt/route.ts": {
+    "mtime": 1775462653.2511895,
+    "ast_hash": "4680685539a81516a63a1abcc98a1d86",
+    "semantic_hash": "4680685539a81516a63a1abcc98a1d86"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/robots.ts": {
+    "mtime": 1775462651.8274772,
+    "ast_hash": "91a3a446402b9d9cec8db3915c9997d7",
+    "semantic_hash": "91a3a446402b9d9cec8db3915c9997d7"
+  },
+  "/Users/aaron/Desktop/thefinnery/app/sitemap.xml/route.ts": {
+    "mtime": 1774444859.6541162,
+    "ast_hash": "e832566d4d3004585cd4de53ffdc1571",
+    "semantic_hash": "e832566d4d3004585cd4de53ffdc1571"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/article/ArticleLayout.tsx": {
+    "mtime": 1775554131.4410775,
+    "ast_hash": "5ef4b6e44072e866a2131c9797c78fe7",
+    "semantic_hash": "5ef4b6e44072e866a2131c9797c78fe7"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/cart/CartDrawer.tsx": {
+    "mtime": 1774503219.2769113,
+    "ast_hash": "3954debf4a62d30f931446ab996de944",
+    "semantic_hash": "3954debf4a62d30f931446ab996de944"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/cart/CartPage.tsx": {
+    "mtime": 1774504182.8818045,
+    "ast_hash": "a673dcef260b87d9a49e6ce39a1530bc",
+    "semantic_hash": "a673dcef260b87d9a49e6ce39a1530bc"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/checkout/CheckoutForm.tsx": {
+    "mtime": 1774504222.198421,
+    "ast_hash": "520f5e60604b15cb03b469472d408f87",
+    "semantic_hash": "520f5e60604b15cb03b469472d408f87"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/ArticleSummary.tsx": {
+    "mtime": 1774606319.3174844,
+    "ast_hash": "d2f40de0571705243287b26055d75a37",
+    "semantic_hash": "d2f40de0571705243287b26055d75a37"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/AuthorBox.tsx": {
+    "mtime": 1774503660.7797844,
+    "ast_hash": "8de7a2951cc08f312ff94bc74c2079df",
+    "semantic_hash": "8de7a2951cc08f312ff94bc74c2079df"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/FAQSection.tsx": {
+    "mtime": 1774606290.2827158,
+    "ast_hash": "0c43cb2e7a54e7370864a3d0294d1c82",
+    "semantic_hash": "0c43cb2e7a54e7370864a3d0294d1c82"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/FreshnessTag.tsx": {
+    "mtime": 1775551737.4589844,
+    "ast_hash": "76589e9d7b7a088565bc22d7a5a423ab",
+    "semantic_hash": "76589e9d7b7a088565bc22d7a5a423ab"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/QuickAnswer.tsx": {
+    "mtime": 1774606328.5516632,
+    "ast_hash": "636c336b788fe5fa85655ee4206ab365",
+    "semantic_hash": "636c336b788fe5fa85655ee4206ab365"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/ReadingTime.tsx": {
+    "mtime": 1774606251.1228983,
+    "ast_hash": "78ef5639b2c898d387a17df0da040873",
+    "semantic_hash": "78ef5639b2c898d387a17df0da040873"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/RelatedArticles.tsx": {
+    "mtime": 1775551704.2332778,
+    "ast_hash": "0e97f0b60a26324b4f6bc40308dfe29e",
+    "semantic_hash": "0e97f0b60a26324b4f6bc40308dfe29e"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/ShareBar.tsx": {
+    "mtime": 1774606281.8288472,
+    "ast_hash": "75e68f7ac39f2e52c8c340aa769697e4",
+    "semantic_hash": "75e68f7ac39f2e52c8c340aa769697e4"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/SourcesList.tsx": {
+    "mtime": 1774503639.6192758,
+    "ast_hash": "17524fa9def8683b8bc093bded3a3107",
+    "semantic_hash": "17524fa9def8683b8bc093bded3a3107"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/eeat/TableOfContents.tsx": {
+    "mtime": 1774503623.3035414,
+    "ast_hash": "6d8eb40c63940c6993fc9481bdeda499",
+    "semantic_hash": "6d8eb40c63940c6993fc9481bdeda499"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/layout/AnnouncementBar.tsx": {
+    "mtime": 1774503176.7180614,
+    "ast_hash": "362de316ae343c203166329dbd87b416",
+    "semantic_hash": "362de316ae343c203166329dbd87b416"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/layout/LanguageSwitcher.tsx": {
+    "mtime": 1774503142.5043395,
+    "ast_hash": "fac11cf8db72e7e5450a576559aac9d1",
+    "semantic_hash": "fac11cf8db72e7e5450a576559aac9d1"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/layout/MobileBottomNav.tsx": {
+    "mtime": 1774503199.7318788,
+    "ast_hash": "8f7d5186958dc7875fe782e197e3232f",
+    "semantic_hash": "8f7d5186958dc7875fe782e197e3232f"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/layout/SearchOverlay.tsx": {
+    "mtime": 1774503252.0669572,
+    "ast_hash": "985b8526ba17448c02d683502eef9cc2",
+    "semantic_hash": "985b8526ba17448c02d683502eef9cc2"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/layout/SiteFooter.tsx": {
+    "mtime": 1775571226.1382759,
+    "ast_hash": "39277058871a93d0776e408779fb44e7",
+    "semantic_hash": "39277058871a93d0776e408779fb44e7"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/layout/SiteHeader.tsx": {
+    "mtime": 1775571205.5702438,
+    "ast_hash": "6cca6e19f994cf74be1d464975683742",
+    "semantic_hash": "6cca6e19f994cf74be1d464975683742"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/product/CareLevelIndicator.tsx": {
+    "mtime": 1774504115.1695254,
+    "ast_hash": "3978646ba13dbf80a11ae67bcd7c0ab1",
+    "semantic_hash": "3978646ba13dbf80a11ae67bcd7c0ab1"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/product/ProductCard.tsx": {
+    "mtime": 1775300043.825931,
+    "ast_hash": "8567f555260610ca01e39810398cab55",
+    "semantic_hash": "8567f555260610ca01e39810398cab55"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/product/ProductFilter.tsx": {
+    "mtime": 1774503684.9208221,
+    "ast_hash": "65fb1d2fb3df039f07defe16f297d000",
+    "semantic_hash": "65fb1d2fb3df039f07defe16f297d000"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/product/ProductGrid.tsx": {
+    "mtime": 1774503888.2209454,
+    "ast_hash": "14306d0566bf8806ef387d3ef3f8c2bb",
+    "semantic_hash": "14306d0566bf8806ef387d3ef3f8c2bb"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/product/SpeciesSpecs.tsx": {
+    "mtime": 1774503860.7392714,
+    "ast_hash": "df19b618b956ae97e300066cf5ed2b16",
+    "semantic_hash": "df19b618b956ae97e300066cf5ed2b16"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/seo/Breadcrumb.tsx": {
+    "mtime": 1774495355.3576941,
+    "ast_hash": "4c7dce3e7cacb7828550bade7e561672",
+    "semantic_hash": "4c7dce3e7cacb7828550bade7e561672"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/seo/JsonLd.tsx": {
+    "mtime": 1774445549.576879,
+    "ast_hash": "a1a2acac1750cdf5bded0f1d086ba94c",
+    "semantic_hash": "a1a2acac1750cdf5bded0f1d086ba94c"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/ui/PlaceholderImage.tsx": {
+    "mtime": 1774496340.468307,
+    "ast_hash": "02516e1f224a6a3c34798b7199ae1dff",
+    "semantic_hash": "02516e1f224a6a3c34798b7199ae1dff"
+  },
+  "/Users/aaron/Desktop/thefinnery/components/ui/StatusBadge.tsx": {
+    "mtime": 1774503693.5344193,
+    "ast_hash": "3bc5dbc7f5ec43343115aac0cabbbb18",
+    "semantic_hash": "3bc5dbc7f5ec43343115aac0cabbbb18"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/cart/CartContext.tsx": {
+    "mtime": 1775462643.5335298,
+    "ast_hash": "7dba61ab436d5df6b169244c6c2ed1d9",
+    "semantic_hash": "7dba61ab436d5df6b169244c6c2ed1d9"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/authors.ts": {
+    "mtime": 1775462658.9657772,
+    "ast_hash": "5bcb0025b2f3b7ce667dbea4656fe0dc",
+    "semantic_hash": "5bcb0025b2f3b7ce667dbea4656fe0dc"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/blog-posts.ts": {
+    "mtime": 1775542338.0294974,
+    "ast_hash": "4cbcf0ad89eb20e8647c9e343aab05ab",
+    "semantic_hash": "4cbcf0ad89eb20e8647c9e343aab05ab"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/blog-tag-hubs.ts": {
+    "mtime": 1775472366.047328,
+    "ast_hash": "3fe80fd7f11df061acd4ad9cb3d010a0",
+    "semantic_hash": "3fe80fd7f11df061acd4ad9cb3d010a0"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/care-guide-categories.ts": {
+    "mtime": 1775539280.238619,
+    "ast_hash": "c00e09142e22ba4a5e95725e9dffa1d5",
+    "semantic_hash": "c00e09142e22ba4a5e95725e9dffa1d5"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/care-guides.ts": {
+    "mtime": 1775542338.0247443,
+    "ast_hash": "58905c4e6b9c2603f8a4c7dfe867ccab",
+    "semantic_hash": "58905c4e6b9c2603f8a4c7dfe867ccab"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/categories.ts": {
+    "mtime": 1775462650.1756935,
+    "ast_hash": "fa727dcd80b07385bb5f0c969a80e4f6",
+    "semantic_hash": "fa727dcd80b07385bb5f0c969a80e4f6"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/glossary.ts": {
+    "mtime": 1775542553.0994036,
+    "ast_hash": "47b1efc6216cc137bee64d74d2d9b9a3",
+    "semantic_hash": "47b1efc6216cc137bee64d74d2d9b9a3"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/products.ts": {
+    "mtime": 1775462649.5549173,
+    "ast_hash": "201f3f872f91608262d278a6b7a47c96",
+    "semantic_hash": "201f3f872f91608262d278a6b7a47c96"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/species-guides.ts": {
+    "mtime": 1775542420.6061988,
+    "ast_hash": "09ed351911c3323ff11743bed8f18414",
+    "semantic_hash": "09ed351911c3323ff11743bed8f18414"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/translations/categories.i18n.ts": {
+    "mtime": 1774503576.6489038,
+    "ast_hash": "2240473dc10c585c7a794115da24b99b",
+    "semantic_hash": "2240473dc10c585c7a794115da24b99b"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/translations/products.i18n.ts": {
+    "mtime": 1774504091.5504825,
+    "ast_hash": "8df44ca12d78b4d36e095ae41bfd54e6",
+    "semantic_hash": "8df44ca12d78b4d36e095ae41bfd54e6"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/data/translations/seo-meta.i18n.ts": {
+    "mtime": 1775462641.348355,
+    "ast_hash": "400bd58d7134ddff586a348569383f19",
+    "semantic_hash": "400bd58d7134ddff586a348569383f19"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/fonts.ts": {
+    "mtime": 1774503127.1836636,
+    "ast_hash": "8b8521e6dd855511721b6fa1fc192d24",
+    "semantic_hash": "8b8521e6dd855511721b6fa1fc192d24"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/i18n/formatPrice.ts": {
+    "mtime": 1774503117.816733,
+    "ast_hash": "638a2643f62412d229561f2342661a25",
+    "semantic_hash": "638a2643f62412d229561f2342661a25"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/i18n/getDictionary.ts": {
+    "mtime": 1774502221.8882377,
+    "ast_hash": "bd93c80836a0ad8cfa884afdac6a79ff",
+    "semantic_hash": "bd93c80836a0ad8cfa884afdac6a79ff"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/search/SearchContext.tsx": {
+    "mtime": 1774496882.0036623,
+    "ast_hash": "1f01ab5319ee1d0bc056a47e15172729",
+    "semantic_hash": "1f01ab5319ee1d0bc056a47e15172729"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/generateMetadata.ts": {
+    "mtime": 1775472321.3513148,
+    "ast_hash": "5cdb28e8f52f0a6787cb31bf34cfa21b",
+    "semantic_hash": "5cdb28e8f52f0a6787cb31bf34cfa21b"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/hreflang.ts": {
+    "mtime": 1774503145.000451,
+    "ast_hash": "761c273e73ff180002c4c5198bbb5d65",
+    "semantic_hash": "761c273e73ff180002c4c5198bbb5d65"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/i18n.ts": {
+    "mtime": 1775462634.977133,
+    "ast_hash": "f6ec4eb6446f894ce5ab6169eea3b53c",
+    "semantic_hash": "f6ec4eb6446f894ce5ab6169eea3b53c"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/jsonLd.ts": {
+    "mtime": 1775472315.5546,
+    "ast_hash": "a6f118c6f6ca47978a83a7c3a2f76621",
+    "semantic_hash": "a6f118c6f6ca47978a83a7c3a2f76621"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/readingTime.ts": {
+    "mtime": 1775548623.3430045,
+    "ast_hash": "5318023aee2c8b2651a171b16ea18b49",
+    "semantic_hash": "5318023aee2c8b2651a171b16ea18b49"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/sitemap.ts": {
+    "mtime": 1774444414.5789294,
+    "ast_hash": "d0cabb9f7578a381ce5e757a14ef43c5",
+    "semantic_hash": "d0cabb9f7578a381ce5e757a14ef43c5"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/seo/slugify.ts": {
+    "mtime": 1774444375.342133,
+    "ast_hash": "3944c13b18b052e81e88333d5de26743",
+    "semantic_hash": "3944c13b18b052e81e88333d5de26743"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/stripe-client.ts": {
+    "mtime": 1774452301.9931562,
+    "ast_hash": "f53617fb55e92566e8043f90bd5e206d",
+    "semantic_hash": "f53617fb55e92566e8043f90bd5e206d"
+  },
+  "/Users/aaron/Desktop/thefinnery/lib/stripe.ts": {
+    "mtime": 1774452562.8183258,
+    "ast_hash": "1b74c43a01818e14b3d24c9d14800888",
+    "semantic_hash": "1b74c43a01818e14b3d24c9d14800888"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/de.json": {
+    "mtime": 1775571289.1710532,
+    "ast_hash": "de45ec7b7a3326308985e848d4cedf21",
+    "semantic_hash": "de45ec7b7a3326308985e848d4cedf21"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/en.json": {
+    "mtime": 1775571247.700887,
+    "ast_hash": "475e15becc102d20636e732267f76af7",
+    "semantic_hash": "475e15becc102d20636e732267f76af7"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/es.json": {
+    "mtime": 1775571299.3130052,
+    "ast_hash": "0f29b36bc4125c571f3d00af122e5fb2",
+    "semantic_hash": "0f29b36bc4125c571f3d00af122e5fb2"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/fr.json": {
+    "mtime": 1775571300.3538058,
+    "ast_hash": "899344419457fbe78fec53ecc1966b48",
+    "semantic_hash": "899344419457fbe78fec53ecc1966b48"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/it.json": {
+    "mtime": 1775571320.8902047,
+    "ast_hash": "76076cc70ed0b1fd2bdea12af4c0e3b8",
+    "semantic_hash": "76076cc70ed0b1fd2bdea12af4c0e3b8"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/ja.json": {
+    "mtime": 1775571300.0933232,
+    "ast_hash": "581605296ad1d616f732f7966372a89a",
+    "semantic_hash": "581605296ad1d616f732f7966372a89a"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/ko.json": {
+    "mtime": 1775571301.3359268,
+    "ast_hash": "9ec79cece7fe90f3b8f0fa82c66de462",
+    "semantic_hash": "9ec79cece7fe90f3b8f0fa82c66de462"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/nl.json": {
+    "mtime": 1775571300.745516,
+    "ast_hash": "df87c56a061a4cc7cc5d3d6ab026f99d",
+    "semantic_hash": "df87c56a061a4cc7cc5d3d6ab026f99d"
+  },
+  "/Users/aaron/Desktop/thefinnery/messages/pt.json": {
+    "mtime": 1775571306.437951,
+    "ast_hash": "c2e8098cf8eabf87b0af33f8562e5931",
+    "semantic_hash": "c2e8098cf8eabf87b0af33f8562e5931"
+  },
+  "/Users/aaron/Desktop/thefinnery/middleware.ts": {
+    "mtime": 1774503137.0777714,
+    "ast_hash": "567e362547962c68cd6b99f793e96e43",
+    "semantic_hash": "567e362547962c68cd6b99f793e96e43"
+  },
+  "/Users/aaron/Desktop/thefinnery/next.config.js": {
+    "mtime": 1775462657.6793537,
+    "ast_hash": "0474a0083f26fb957d1ac89f51e349c3",
+    "semantic_hash": "0474a0083f26fb957d1ac89f51e349c3"
+  },
+  "/Users/aaron/Desktop/thefinnery/package.json": {
+    "mtime": 1775462655.9304035,
+    "ast_hash": "7d3d7f72ba3148f8af7eba9c5b8d9ccb",
+    "semantic_hash": "7d3d7f72ba3148f8af7eba9c5b8d9ccb"
+  },
+  "/Users/aaron/Desktop/thefinnery/postcss.config.js": {
+    "mtime": 1774444301.441798,
+    "ast_hash": "8640f9b2e6475cc3f5b1ff4548925765",
+    "semantic_hash": "8640f9b2e6475cc3f5b1ff4548925765"
+  },
+  "/Users/aaron/Desktop/thefinnery/public/images/brand/index.json": {
+    "mtime": 1774607940.5515172,
+    "ast_hash": "7f3ad474aa1ac864c61f40bee5d0d232",
+    "semantic_hash": "7f3ad474aa1ac864c61f40bee5d0d232"
+  },
+  "/Users/aaron/Desktop/thefinnery/scripts/generate-all-images.mjs": {
+    "mtime": 1775479833.1875856,
+    "ast_hash": "daeee9fcf06630bc1562a0a3dafda256",
+    "semantic_hash": "daeee9fcf06630bc1562a0a3dafda256"
+  },
+  "/Users/aaron/Desktop/thefinnery/scripts/generate-brand-images.ts": {
+    "mtime": 1775462656.9478726,
+    "ast_hash": "a40a2b0fdeeaddc4f590ffa4f8ea7f34",
+    "semantic_hash": "a40a2b0fdeeaddc4f590ffa4f8ea7f34"
+  },
+  "/Users/aaron/Desktop/thefinnery/scripts/generate-images.mjs": {
+    "mtime": 1774607685.748977,
+    "ast_hash": "08760bb830a4540700bca175d3ec6898",
+    "semantic_hash": "08760bb830a4540700bca175d3ec6898"
+  },
+  "/Users/aaron/Desktop/thefinnery/scripts/generate-product-images.mjs": {
+    "mtime": 1775467327.541236,
+    "ast_hash": "45ed0bc43464417bcf9cae6d0b1731bf",
+    "semantic_hash": "45ed0bc43464417bcf9cae6d0b1731bf"
+  },
+  "/Users/aaron/Desktop/thefinnery/tailwind.config.ts": {
+    "mtime": 1774503151.1138709,
+    "ast_hash": "729d21486a403809274b77598a7510fd",
+    "semantic_hash": "729d21486a403809274b77598a7510fd"
+  },
+  "/Users/aaron/Desktop/thefinnery/tsconfig.json": {
+    "mtime": 1774444299.7235699,
+    "ast_hash": "30bfab247b1544c2973de774efa2bc19",
+    "semantic_hash": "30bfab247b1544c2973de774efa2bc19"
+  },
+  "/Users/aaron/Desktop/thefinnery/types/article.ts": {
+    "mtime": 1775471814.4915197,
+    "ast_hash": "fea2bb3ecd94e2ddcd74861e87915f26",
+    "semantic_hash": "fea2bb3ecd94e2ddcd74861e87915f26"
+  },
+  "/Users/aaron/Desktop/thefinnery/types/author.ts": {
+    "mtime": 1774444361.2970088,
+    "ast_hash": "c12160ba215eded4c02209541ddcb203",
+    "semantic_hash": "c12160ba215eded4c02209541ddcb203"
+  },
+  "/Users/aaron/Desktop/thefinnery/types/category.ts": {
+    "mtime": 1774489267.482804,
+    "ast_hash": "71b89aafb603fcbeb27b381adafc9dc8",
+    "semantic_hash": "71b89aafb603fcbeb27b381adafc9dc8"
+  },
+  "/Users/aaron/Desktop/thefinnery/types/product.ts": {
+    "mtime": 1774444359.122091,
+    "ast_hash": "6dce9f38856dd5bfb50077bbce9b986c",
+    "semantic_hash": "6dce9f38856dd5bfb50077bbce9b986c"
+  },
+  "/Users/aaron/Desktop/thefinnery/BRAND.md": {
+    "mtime": 1775462859.5834205,
+    "ast_hash": "bcb5e375c8614038efa8aeaf7b7ea19f",
+    "semantic_hash": "bcb5e375c8614038efa8aeaf7b7ea19f"
+  },
+  "/Users/aaron/Desktop/thefinnery/CLAUDE (2).md": {
+    "mtime": 1775462892.9005976,
+    "ast_hash": "ab0bd9e327f63d79c0980c3cf4358bfa",
+    "semantic_hash": "ab0bd9e327f63d79c0980c3cf4358bfa"
+  },
+  "/Users/aaron/Desktop/thefinnery/THEFINNERY_SEO.md": {
+    "mtime": 1775462909.339277,
+    "ast_hash": "73e7948c065ebea4513c8c02c1815197",
+    "semantic_hash": "73e7948c065ebea4513c8c02c1815197"
+  },
+  "/Users/aaron/Desktop/thefinnery/generate-brand-images.md": {
+    "mtime": 1775462860.4397354,
+    "ast_hash": "6f5aaf38a63da90ce78003797d41a44f",
+    "semantic_hash": "6f5aaf38a63da90ce78003797d41a44f"
+  },
+  "/Users/aaron/Desktop/thefinnery/index.html": {
+    "mtime": 1774444194.717876,
+    "ast_hash": "3c6087d47aca55e92b565abf8a9b9834",
+    "semantic_hash": "3c6087d47aca55e92b565abf8a9b9834"
+  },
+  "/Users/aaron/Desktop/thefinnery/public/preview-products.html": {
+    "mtime": 1774799716.9986603,
+    "ast_hash": "7957cf53e1f37e08266163cba430db68",
+    "semantic_hash": "7957cf53e1f37e08266163cba430db68"
+  },
+  "/Users/aaron/Desktop/thefinnery/scripts/preview-products.html": {
+    "mtime": 1774799699.4532084,
+    "ast_hash": "7957cf53e1f37e08266163cba430db68",
+    "semantic_hash": "7957cf53e1f37e08266163cba430db68"
+  },
+  "/Users/aaron/Desktop/thefinnery/topical-authority-plan.html": {
+    "mtime": 1775283726.8474927,
+    "ast_hash": "d98ea5e992a3e4a82d5283dfb2b10567",
+    "semantic_hash": "d98ea5e992a3e4a82d5283dfb2b10567"
+  }
+}
